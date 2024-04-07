@@ -1,8 +1,8 @@
 const querystring = require('querystring');
-const languages = require('./languages');
+const languages = require('./languages.js');
 const proxy_check = require('proxy-check');
 const tunnel = require('tunnel');
-const token = require('./token');
+const token = require('./token.js');
 const got = require('got');
 
 const translatte = async (text, opts) => {
@@ -404,3 +404,9 @@ const translatte = async (text, opts) => {
 
 module.exports = translatte;
 module.exports.languages = languages;
+
+translatte('Do you speak Russian?', {to: 'bn'}).then((res) => {
+  console.log(res.text);
+}).catch((err) => {
+  console.error(err);
+});

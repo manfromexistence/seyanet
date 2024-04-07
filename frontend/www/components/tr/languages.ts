@@ -1,12 +1,4 @@
-/**
- *
- * Generated from https://translate.google.com
- *
- * The languages that Google Translate supports (as of 5/15/16) alongside with their ISO 639-1 codes
- * See https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
- */
-
-exportzlet langs:any = {
+const langs: {[key: string]: string} = {
   'auto': 'Automatic',
   'af': 'Afrikaans',
   'sq': 'Albanian',
@@ -115,12 +107,13 @@ exportzlet langs:any = {
   'yo': 'Yoruba',
   'zu': 'Zulu'
 };
+
 /**
 * Returns the ISO 639-1 code of the desiredLang – if it is supported by Google Translate
 * @param {string} desiredLang – the name or the code of the desired language
 * @returns {string|boolean} The ISO 639-1 code of the language or false if the language is not supported
 */
-function getCode(desiredLang: string) {
+function getCode(desiredLang: string): string | boolean {
   if (!desiredLang) {
       return false;
   }
@@ -130,7 +123,7 @@ function getCode(desiredLang: string) {
       return desiredLang;
   }
 
-  let keys = Object.keys(langs).filter(function (key) {
+  const keys = Object.keys(langs).filter((key: string) => {
       if (typeof langs[key] !== 'string') {
           return false;
       }
@@ -146,7 +139,7 @@ function getCode(desiredLang: string) {
 * @param desiredLang – the ISO 639-1 code or the name of the desired language
 * @returns {boolean}
 */
-function isSupported(desiredLang: string) {
+function isSupported(desiredLang: string): boolean {
   return Boolean(getCode(desiredLang));
 }
 
@@ -155,10 +148,10 @@ function isSupported(desiredLang: string) {
 * @param str – string
 * @returns {number}
 */
-function utf8Length(str: string) {
-  let utf8 = [];
+function utf8Length(str: string): number {
+  const utf8: number[] = [];
   for (let i = 0; i < str.length; i++) {
-      let charcode = str.charCodeAt(i);
+      let charcode:any = str.charCodeAt(i);
       if (charcode < 0x80) utf8.push(charcode);
       else if (charcode < 0x800) {
           utf8.push(0xc0 | (charcode >> 6),
@@ -181,7 +174,5 @@ function utf8Length(str: string) {
   return utf8.length;
 }
 
-// module.exports = langs;
-// module.exports.isSupported = isSupported;
-// module.exports.getCode = getCode;
-// module.exports.utf8Length = utf8Length;
+export default langs;
+export { isSupported, getCode, utf8Length };

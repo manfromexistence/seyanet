@@ -1,10 +1,3 @@
-/**
- * Last update: 2018/11/24
- * https://translate.google.com/translate/releases/twsfe_w_20160620_RC00/r/js/desktop_module_main.js
- *
- * Everything between 'BEGIN' and 'END' was copied from the url above.
- */
-
 var got = require('got');
 var Configstore = require('configstore');
 
@@ -118,3 +111,4 @@ function get(text, opts) {
 }
 
 module.exports.get = get;
+
