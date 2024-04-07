@@ -15,44 +15,13 @@ import {
 import { buttonVariants } from "@/registry/new-york/ui/button"
 import MailPage from "@/app/(app)/examples/mail/page"
 import { useState } from 'react';
-import translatte from 'translatte';
-
-const languages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "in", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
-
-export function TranslationPage() {
-    const [translations, setTranslations] = useState<{[key: string]: string}>({});
-
-    const translateText = async () => {
-        let newTranslations: {[key: string]: string} = {};
-        for (let lang of languages) {
-            try {
-                const res = await translatte('Do you speak Russian?', {to: lang});
-                newTranslations[lang] = res.text;
-            } catch (err) {
-                console.error(`Error translating to ${lang}: ${err}`);
-            }
-        }
-        setTranslations(newTranslations);
-    };
-
-    return (
-        <div>
-            <button onClick={translateText}>Translate</button>
-            {Object.entries(translations).map(([lang, text]) => (
-                <div key={lang}>
-                    <h2>{lang}</h2>
-                    <p>{text}</p>
-                </div>
-            ))}
-        </div>
-    );
-}
+import Translations from "@/components/translation"
 
 export default function IndexPage() {
   return (
     <div className="container relative">
       <PageHeader>
-        <TranslationPage />
+        {/* <Translations /> */}
         <PageHeaderHeading>Project for Mostafa.</PageHeaderHeading>
         <PageHeaderDescription>
           {/* Translation Management for Seyaha Website. */}
