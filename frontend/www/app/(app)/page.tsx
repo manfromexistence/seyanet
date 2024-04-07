@@ -1,4 +1,4 @@
-import Image from "next/image"
+"use client"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -9,9 +9,23 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header"
 import { buttonVariants } from "@/registry/new-york/ui/button"
-// import Translations from "@/components/translation"
+import translatte from "@/components/tr/index.js"
+import { useState } from "react"
 
 export default function IndexPage() {
+
+  const [translation, setTranslation] = useState('Github');
+
+  translatte("Do you speak Russian?", { to: "bn" })
+    .then((res: { text: any }) => {
+      // translation = res.text;
+      // setTranslation(res.text);
+    })
+    .catch((err: any) => {
+      console.error(err)
+    })
+  // console.log(translation)
+
   return (
     <div className="container relative">
       <PageHeader>
@@ -33,11 +47,12 @@ export default function IndexPage() {
             className={cn(buttonVariants({ variant: "outline" }))}
           >
             <Icons.gitHub className="mr-2 h-4 w-4" />
-            GitHub
+            {translation}
           </Link>
         </PageActions>
       </PageHeader>
 
+      {/* <span>{translation}</span> */}
       {/* <Translations /> */}
       {/* <ExamplesNav className="[&>a:first-child]:text-primary" />
       <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
