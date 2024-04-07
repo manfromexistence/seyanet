@@ -1,10 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-
-import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { Announcement } from "@/components/announcement"
-import { ExamplesNav } from "@/components/examples-nav"
 import { Icons } from "@/components/icons"
 import {
   PageActions,
@@ -13,8 +9,6 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header"
 import { buttonVariants } from "@/registry/new-york/ui/button"
-import MailPage from "@/app/(app)/examples/mail/page"
-import { useState } from 'react';
 import Translations from "@/components/translation"
 
 export default function IndexPage() {
@@ -43,7 +37,9 @@ export default function IndexPage() {
           </Link>
         </PageActions>
       </PageHeader>
-      <ExamplesNav className="[&>a:first-child]:text-primary" />
+
+      <Translations />
+      {/* <ExamplesNav className="[&>a:first-child]:text-primary" />
       <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
         <Image
           src="/examples/mail-dark.png"
@@ -64,7 +60,7 @@ export default function IndexPage() {
         <div className="overflow-hidden rounded-lg border bg-background shadow-lg">
           <MailPage />
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }
