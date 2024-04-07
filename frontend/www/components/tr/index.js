@@ -1,9 +1,9 @@
-const querystring = require('querystring');
-const languages = require('./languages.js');
-const proxy_check = require('proxy-check');
-const tunnel = require('tunnel');
-const token = require('./token.js');
-const got = require('got');
+import querystring from 'querystring';
+import { isSupported, getCode, utf8Length} from './languages.js';
+import proxy_check from 'proxy-check';
+import tunnel from 'tunnel';
+import token from './token.js';
+import got from 'got';
 
 const translatte = async (text, opts) => {
     opts = opts || {};
@@ -36,19 +36,19 @@ const translatte = async (text, opts) => {
         'Text translation request failed'
     ];
 
-    if (opts.from && !languages.isSupported(opts.from)) {
+    if (opts.from && !isSupported(opts.from)) {
         return Promise.reject({message: errors[0].replace('[lang]', opts.from)});
     }
 
-    if (opts.to && !languages.isSupported(opts.to)) {
+    if (opts.to && !isSupported(opts.to)) {
         return Promise.reject({message: errors[0].replace('[lang]', opts.to)});
     }
 
-    let bytes = languages.utf8Length(text);
+    let bytes = utf8Length(text);
     opts.client = opts.client || 't';
     opts.tld = opts.tld || 'com';
-    opts.from = languages.getCode(opts.from || 'auto');
-    opts.to = languages.getCode(opts.to || 'en');
+    opts.from = getCode(opts.from || 'auto');
+    opts.to = getCode(opts.to || 'en');
     opts.services = opts.services || {google_free: true};
     let services = Object.keys(opts.services);
 
@@ -402,8 +402,8 @@ const translatte = async (text, opts) => {
     }
 };
 
-module.exports = translatte;
-module.exports.languages = languages;
+export default translatte;
+// export { languages };
 
 translatte('Do you speak Russian?', {to: 'bn'}).then((res) => {
   console.log(res.text);

@@ -1,5 +1,5 @@
-var got = require('got');
-var Configstore = require('configstore');
+import got from 'got';
+import Configstore from 'configstore';
 
 /* eslint-disable */
 // BEGIN
@@ -110,5 +110,5 @@ function get(text, opts) {
     });
 }
 
-module.exports.get = get;
+export default { get };
 

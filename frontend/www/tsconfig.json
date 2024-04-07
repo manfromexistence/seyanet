@@ -33,6 +33,6 @@
     ".next/types/**/*.ts",
     ".contentlayer/generated",
     "./types/translatte.d.ts"
-  ],
+, "components/tr/languages.js", "components/translation.jsx"  ],
   "exclude": ["node_modules", "./scripts/build-registry.mts"]
 }

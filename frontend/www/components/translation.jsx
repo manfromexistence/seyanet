@@ -1,14 +1,14 @@
 "use client"
-const translatte = require("translatte");
+import translatte from "./tr/index.js";
 import { useState } from 'react';
 
 const languages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "in", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
 
 export default function Translations() {
-    const [translations, setTranslations] = useState<{[key: string]: string}>({});
+    const [translations, setTranslations] = useState<{key}>({});
 
     const translateText = async () => {
-        let newTranslations: {[key: string]: string} = {};
+        let newTranslations = {};
         for (let lang of languages) {
             try {
                 const res = await translatte('Do you speak Russian?', {to: lang});
