@@ -20,19 +20,20 @@ export default function IndexPage() {
     <div className="container relative">
       <PageHeader>
         <Announcement />
-        <PageHeaderHeading>Build your component library</PageHeaderHeading>
+        <PageHeaderHeading>Project for Mostafa.</PageHeaderHeading>
         <PageHeaderDescription>
-          Beautifully designed components that you can copy and paste into your
-          apps. Accessible. Customizable. Open Source.
+          {/* Translation Management for Seyaha Website. */}
+          I am offering a comprehensive solution for your e-commerce business with a Translation Management System (TMS).
+          This system will be capable of translating various aspects of your product listings into over 20 languages, thereby expanding your global reach and accessibility.
         </PageHeaderDescription>
         <PageActions>
-          <Link href="/docs" className={cn(buttonVariants())}>
-            Get Started
+          <Link href="https://www.upwork.com/freelancers/~01b52af7a84ded5239" className={cn(buttonVariants())}>
+            Upwork
           </Link>
           <Link
             target="_blank"
             rel="noreferrer"
-            href={siteConfig.links.github}
+            href="https://github.com/manfromexistence"
             className={cn(buttonVariants({ variant: "outline" }))}
           >
             <Icons.gitHub className="mr-2 h-4 w-4" />
