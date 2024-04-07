@@ -16,14 +16,14 @@ export default function IndexPage() {
 
   const [translation, setTranslation] = useState('Github');
 
-  translatte("Do you speak Russian?", { to: "bn" })
-    .then((res: { text: any }) => {
-      // translation = res.text;
-      // setTranslation(res.text);
-    })
-    .catch((err: any) => {
-      console.error(err)
-    })
+  // translatte("Do you speak Russian?", { to: "bn" })
+  //   .then((res: { text: any }) => {
+  //     // translation = res.text;
+  //     // setTranslation(res.text);
+  //   })
+  //   .catch((err: any) => {
+  //     console.error(err)
+  //   })
   // console.log(translation)
 
   return (
@@ -47,7 +47,7 @@ export default function IndexPage() {
             className={cn(buttonVariants({ variant: "outline" }))}
           >
             <Icons.gitHub className="mr-2 h-4 w-4" />
-            {translation}
+            Github
           </Link>
         </PageActions>
       </PageHeader>
