@@ -404,3 +404,9 @@ const translatte = async (text, opts) => {
 
 module.exports = translatte;
 module.exports.languages = languages;
+
+translatte('Do you speak Russian?', {to: 'bn'}).then((res) => {
+  console.log(res.text);
+}).catch((err) => {
+  console.error(err);
+});

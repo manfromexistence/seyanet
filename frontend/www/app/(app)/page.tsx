@@ -9,7 +9,7 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header"
 import { buttonVariants } from "@/registry/new-york/ui/button"
-import Translations from "@/components/translation"
+// import Translations from "@/components/translation"
 
 export default function IndexPage() {
   return (

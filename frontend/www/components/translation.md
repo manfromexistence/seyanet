@@ -1,5 +1,5 @@
 "use client"
-import translatte from "./tr/index.js";
+import translatte from "translatte";
 import { useState } from 'react';
 
 const languages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "in", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
