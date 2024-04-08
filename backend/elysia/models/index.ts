@@ -104,18 +104,18 @@ createDocument();
 // m.map = new Map([['key', 'value']]);
 // m.save(callback);
 
-// const productSchema:any = new mongoose.Schema({
-//   title: {type: "string",require:true,trim:true},
-//   description: {type: "string",require:true,trim:true},
-//   // variation: {type: "string",require:true,trim:true},
-//   // price_include: {type: "string",require:true,trim:true},
-//   // contents_and_exclusions: {type: "string",require:true,trim:true},
-//   // interests: {type: "string",require:true,trim:true},
-//   // transportation: {type: "string",require:true,trim:true},
-//   // guidance_and_assistance: {type: "string",require:true,trim:true},
-//   // path: {type: "string",require:true,trim:true},
-//   // requirements: {type: "string",require:true,trim:true},
-// })
+const productSchema:any = new mongoose.Schema({
+  title: {type: "string",require:true,trim:true},
+  description: {type: "string",require:true,trim:true},
+  variation: {type: "string",require:true,trim:true},
+  price_include: {type: "string",require:true,trim:true},
+  contents_and_exclusions: {type: "string",require:true,trim:true},
+  interests: {type: "string",require:true,trim:true},
+  transportation: {type: "string",require:true,trim:true},
+  guidance_and_assistance: {type: "string",require:true,trim:true},
+  path: {type: "string",require:true,trim:true},
+  requirements: {type: "string",require:true,trim:true},
+})
 
 // const productModel = mongoose.model("product", productSchema);
 
