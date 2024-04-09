@@ -5,7 +5,7 @@ let translation: Text;
 
 translatte("Do you speak Russian?", { to: "bn" })
   .then((res: { text: any }) => {
-    translation = res.text
+    translation = res.text;
   })
   .catch((err: any) => {
     console.error(err)

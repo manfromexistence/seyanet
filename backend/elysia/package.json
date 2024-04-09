@@ -7,8 +7,11 @@
   },
   "dependencies": {
     "elysia": "latest",
-    "mongodb": "^6.5.0",
-    "mongoose": "^8.3.0"
+    "mongoose": "^8.3.0",
+    "tunnel": "0.0.6",
+    "configstore": "4.0.0",
+    "proxy-check": "1.0.8",
+    "got": "9.6.0"
   },
   "devDependencies": {
     "bun-types": "latest"
