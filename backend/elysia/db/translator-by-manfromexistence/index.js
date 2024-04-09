@@ -5,7 +5,7 @@ import tunnel from 'tunnel';
 import token from './token.js';
 import got from 'got';
 
-const translatte = async (text, opts) => {
+const translator = async (text, opts) => {
     opts = opts || {};
     opts = JSON.parse(JSON.stringify(opts));
 
@@ -14,7 +14,7 @@ const translatte = async (text, opts) => {
         raw: '',
         from: {
             language: {
-                didYouMean: false,
+                didYouMean: true,
                 iso: ''
             },
             text: {
@@ -402,11 +402,11 @@ const translatte = async (text, opts) => {
     }
 };
 
-export default translatte;
+export default translator;
 // export { languages };
 
-translatte('Do you speak Russian?', {to: 'bn'}).then((res) => {
-  console.log(res.text);
-}).catch((err) => {
-  console.error(err);
-});
+// translatte('Do you speak Russian?', {to: 'bn'}).then((res) => {
+//   console.log(res.text);
+// }).catch((err) => {
+//   console.error(err);
+// });

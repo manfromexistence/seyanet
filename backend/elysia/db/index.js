@@ -1,26 +1,19 @@
 import { Schema, model, connect } from 'mongoose';
-import translatte from "./translator-by-manfromexistence/index.js";
+import translator from "./translator-by-manfromexistence/index.js";
 
 const languages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi","ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
+let res;
+
 for (let lang of languages) {
   try {
-      let res = await translatte('Do you speak Russian?', {to: lang});
-      console.log(res.text);
+      res = await translator("Do you speak Russian and so on cuase I know you know he told me to help him and he said yeh", {to: lang});
+      console.log(res.from.language.iso);
   } catch (err) {
       console.error(`Error translating to ${lang}: ${err}`);
   }
 }
 
-// let translation;
-
-// translatte("Do you speak Russian?", { to: "bn" })
-//   .then((res) => {
-//     translation = res.text;
-//   })
-//   .catch((err) => {
-//     console.error(err)
-//   })
-
+// console.log(res.text);
 
 // const languageSchema = new Schema({
 //   code: {
