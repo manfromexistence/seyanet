@@ -28,6 +28,7 @@ import {
 } from "@/registry/default/ui/select"
 import { Button } from "@/registry/default/ui/button"
 import { Plus } from "lucide-react"
+import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 
 translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
   console.log(res.text);
@@ -62,29 +63,72 @@ export default function IndexPage() {
       </PageHeader>
 
       <div className="w-full h-[100vh] rounded-md flex items-start justify-start px-5 space-x-2">
-        <Input className="w-full" placeholder="Search your products..." />
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select by activity" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Acitivites</SelectLabel>
-              <SelectItem value="apple">Title</SelectItem>
-              <SelectItem value="banana">Description</SelectItem>
-              <SelectItem value="blueberry">Path</SelectItem>
-              <SelectItem value="grapes">Price</SelectItem>
-              <SelectItem value="pineapple">Requirement</SelectItem>
-              <SelectItem value="pineapple">Variation</SelectItem>
-              <SelectItem value="pineapple">Explusive</SelectItem>
-              <SelectItem value="pineapple">Guidence</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Button variant="secondary">
-          <Plus className="h-5 w-5" />
-        </Button>
+        <div className="w-full">
+          <Input className="w-full" placeholder="Search your products..." />
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select by activity" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Acitivites</SelectLabel>
+                <SelectItem value="apple">Title</SelectItem>
+                <SelectItem value="banana">Description</SelectItem>
+                <SelectItem value="blueberry">Path</SelectItem>
+                <SelectItem value="grapes">Price</SelectItem>
+                <SelectItem value="pineapple">Requirement</SelectItem>
+                <SelectItem value="pineapple">Variation</SelectItem>
+                <SelectItem value="pineapple">Explusive</SelectItem>
+                <SelectItem value="pineapple">Guidence</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Button variant="secondary">
+            <Plus className="h-5 w-5" />
+          </Button>
+        </div>
 
+
+        <Card>
+          <CardHeader className="pb-4">
+            <CardTitle>Running Shoes</CardTitle>
+            <CardDescription>Optimal footwear for your workout</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Path</h3>
+                <p className="text-sm leading-6">Running track or treadmill</p>
+              </div>
+              <div>
+                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Requirements</h3>
+                <ul className="list-disc pl-5 text-sm">
+                  <li>Comfortable clothing</li>
+                  <li>Hydration</li>
+                  <li>Proper form</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Variations</h3>
+              <ul className="list-disc pl-5 text-sm">
+                <li>Trail running shoes</li>
+                <li>Sprint spikes</li>
+                <li>Minimalist running shoes</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Guidance</h3>
+              <p className="text-sm leading-6">
+                Warm-up before running. Choose the right shoes for your running style. Maintain a proper running posture.
+              </p>
+            </div>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Price</h3>
+              <p className="text-2xl font-semibold">$89.99</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* <ExamplesNav className="[&>a:first-child]:text-primary" />
