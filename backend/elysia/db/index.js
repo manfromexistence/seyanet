@@ -61,16 +61,16 @@ async function run() {
         const translateRequirements = await translator(requirements, { to: lang });
 
         translations[lang] = {
-          title: translatedTitle.text,
-          description: translatedDescription.text,
-          variation: translatedVariation.text,
-          price: translatedPrice.text,
-          exclusions: translatedExclusions.text,
-          interests: translatedInterests.text,
-          transportation: translatedTransportation.text,
-          guidance: translatedGuidance.text,
-          path: translatePath.text,
-          requirements: translateRequirements.text,
+            title: translatedTitle.text,
+            description: translatedDescription.text,
+            variation: translatedVariation.text,
+            price: translatedPrice.text,
+            exclusions: translatedExclusions.text,
+            interests: translatedInterests.text,
+            transportation: translatedTransportation.text,
+            guidance: translatedGuidance.text,
+            path: translatePath.text,
+            requirements: translateRequirements.text,
         };
       } catch (err) {
         console.error(`Error translating to lang}: err}`);
@@ -79,15 +79,13 @@ async function run() {
   
     console.log(translations);
 
-    const newContent = new Content({
-      data: `${translations}`
-    });
+    const newContent = new Content({ data: translations });
     await newContent.save()
       .then(() => console.log("Content saved successfully"))
       .catch((err) => console.error("Error saving content:", err));
   }
   
-  const desiredLanguages = ["ar", "bn", "de"];
+  const desiredLanguages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
   
   translateAndSaveContent(desiredLanguages);
 
