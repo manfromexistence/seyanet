@@ -40,17 +40,97 @@ let title = "Amazing Day Trip to Sundarbans National Forest",
       "guidance": "Greetings: 'Eid Mubarak'  | Traditional clothing encouraged  | Gift-giving (optional)",
       "path": "as you wish!",
       "requirements": "Varies depending on location and traditions, but may involve attending prayers or family gatherings."
+    },
+    kabah: {
+      "title": "Journey to Hajj: A pilgrimage to Kabah",
+      "description": "Hajj is a holy pilgrimage for Muslims to the holiest city of Islam, Mecca, Saudi Arabia. It's a mandatory pilgrimage for those who are physically and financially able.",
+      "variation": "One mounth",
+      "price": "Varies depending on travel arrangements, accommodation, and services.",
+      "exclusions": "Price may not include visa fees, personal expenses, and sacrificial animal (if applicable).",
+      "interests": ["Religion", "Pilgrimage", "Islam", "Cultural immersion"],
+      "transportation": "Varies depending on origin. Options include flights, buses, or joining organized Hajj groups with transportation included.",
+      "guidance": "Requires a valid Hajj visa.  |  Strict adherence to Hajj rituals.  |  Recommended to travel with a knowledgeable guide.",
+      "path": "Varies depending on origin, but ultimately leads to Mecca, Saudi Arabia.",
+      "requirements": "Physical and financial ability.  |  For some nationalities, a Hajj quota system may apply."
+    },
+    madian: {
+      "title": "Journey to Madina",
+      "description": "Embark on a spiritual pilgrimage to Madina, the second holiest city in Islam. Explore the Prophet's Mosque (Masjid النبوي) and other historical sites, experience the vibrant Islamic culture, and deepen your faith.",
+      "variation": "Individual travel or Guided tour (Umrah packages available)",
+      "price": "Varies depending on travel time, origin, accommodation, and inclusions. Expect a range of \$2,000 - \$10,000+.",  // Placeholder for price range
+      "exclusions": "Typically excludes international flights, meals beyond breakfast at some hotels, personal expenses, and Saudi Arabia visa fees.",  // Placeholder for common exclusions
+      "interests": ["Religion", "Pilgrimage", "History", "Culture", "Architecture"],
+      "transportation": "Varies depending on your origin. Options include flights (consider nearby airports like Jeddah or Medina), buses (potentially long journeys depending on origin), or car travel (requires proper permits for international travel by car).",
+      "guidance": "Consult a trusted travel agency specializing in Islamic pilgrimages. Visa and vaccination requirements may apply (check with Saudi Arabian authorities). Consider travel insurance and appropriate Islamic attire for religious sites. Learn basic Arabic phrases for a more enriching experience.",
+      "path": "Varies depending on origin. Common routes involve flights to Jeddah or Medina airports, followed by ground transportation to Madina.",
+      "requirements": "Physical fitness for religious activities (walking, standing for prayers).  Appropriate clothing for Islamic sites (modest clothing that covers shoulders and knees for both men and women). Valid visa for Saudi Arabia (apply well in advance). Umrah pilgrimage may require additional permits depending on nationality."
     }
+    
+    
     
 };
   
 export default function SiteNFooter() {
 
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen1, setIsOpen1] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
+  const [isOpen3, setIsOpen3] = React.useState(false);
 
   return (
-    <div className="products grid">
+    <div className="products flex items-start justify-start space-x-3 flex-row">
+ 
+      <Card className="lg:w-[400px] h-auto ">
+        <CardHeader className="pb-4 space-y-3">
+          <AspectRatio ratio={16 / 9}>
+            <Image src="/eid.jpg" alt="Image" fill={true} className="rounded-md object-cover" />
+          </AspectRatio>
+          <CardTitle>{products.eidMubarakData.title}</CardTitle>
+          <CardDescription>{products.eidMubarakData.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
 
+          <Collapsible
+            open={isOpen1}
+            onOpenChange={setIsOpen1}
+            className="w-[350px] space-y-2"
+          >
+            <div className="flex items-center justify-between space-x-4 px-4">
+              <h4 className="text-sm font-semibold">
+                See more...
+              </h4>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="w-9 p-0">
+                  <ChevronsUpDown className="h-4 w-4" />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            <div className="rounded-md border px-4 py-3 font-mono text-sm">
+              Variation: {products.eidMubarakData.variation} 
+            </div>
+            <CollapsibleContent className="space-y-2">
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Price: {products.eidMubarakData.price}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Exclusions: {products.eidMubarakData.exclusions}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Interesst: {products.eidMubarakData.interests}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Transportation: {products.eidMubarakData.transportation}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Guidence: {products.eidMubarakData.guidance}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Requirements: {products.eidMubarakData.requirements}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </CardContent>
+      </Card>
       <Card className="lg:w-[400px] h-auto ">
         <CardHeader className="pb-4 space-y-3">
           <AspectRatio ratio={16 / 9}>
@@ -62,8 +142,8 @@ export default function SiteNFooter() {
         <CardContent className="space-y-4">
 
           <Collapsible
-            open={isOpen}
-            onOpenChange={setIsOpen}
+            open={isOpen2}
+            onOpenChange={setIsOpen2}
             className="w-[350px] space-y-2"
           >
             <div className="flex items-center justify-between space-x-4 px-4">
@@ -101,60 +181,6 @@ export default function SiteNFooter() {
               </div>
             </CollapsibleContent>
           </Collapsible>
-          {/* <Accordion type="single" collapsible className="w-full">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>
-          Yes. It adheres to the WAI-ARIA design pattern.
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Is it styled?</AccordionTrigger>
-        <AccordionContent>
-          Yes. It comes with default styles that matches the other
-          components&apos; aesthetic.
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>Is it animated?</AccordionTrigger>
-        <AccordionContent>
-          Yes. It&apos;s animated by default, but you can disable it if you
-          prefer.
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion> */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Path</h3>
-                  <p className="text-sm leading-6">Running track or treadmill</p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Requirements</h3>
-                  <ul className="list-disc pl-5 text-sm">
-                    <li>Comfortable clothing</li>
-                    <li>Hydration</li>
-                    <li>Proper form</li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Variations</h3>
-                <ul className="list-disc pl-5 text-sm">
-                  <li>Trail running shoes</li>
-                  <li>Sprint spikes</li>
-                  <li>Minimalist running shoes</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Guidance</h3>
-                <p className="text-sm leading-6">
-                  Warm-up before running. Choose the right shoes for your running style. Maintain a proper running posture.
-                </p>
-              </div>
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Price</h3>
-                <p className="text-2xl font-semibold">$89.99</p>
-              </div> */}
         </CardContent>
       </Card>
 
