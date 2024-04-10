@@ -76,7 +76,7 @@ export default function IndexPage() {
         <div className="w-full flex flex-row items-start justify-start space-x-2">
           <Input className="w-full" placeholder="Search your products..." />
           <Select>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select by activity" />
             </SelectTrigger>
             <SelectContent>

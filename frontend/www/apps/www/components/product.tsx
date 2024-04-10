@@ -3,44 +3,46 @@
 import React from "react";
 import { Button } from "@/registry/default/ui/button"
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
-import { ChevronsUpDown, X } from "lucide-react"
+import { ChevronsUpDown, Ellipsis, Pencil, Trash2, X } from "lucide-react"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/registry/default/ui/collapsible"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/registry/default/ui/accordion"
 import Image from "next/image"
 import { AspectRatio } from "@/registry/default/ui/aspect-ratio";
-let title = "Amazing Day Trip to Sundarbans National Forest",
-  description = "Explore the natural wonders of the Sundarbans, the largest mangrove forest in the world, on this exciting day trip. Cruise through the lush waterways, spot diverse wildlife, and learn about the unique ecosystem.",
-  variation = "Private Tour or Group Tour",
-  price = "Boat transportation, park entrance fees, experienced guide, and lunch.",
-  exclusions = "Includes boat ride, park entry, guide, and lunch. Excludes travel to and from Khulna, personal expenses, and gratuities.",
-  interests = "Wildlife, nature, photography, boat tours",
-  transportation = "Local boat transportation within the Sundarbans",
-  guidance = "Experienced English-speaking guide throughout the tour",
-  path = "Khulna - Sundarbans National Forest - Khulna",
-  requirements = "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing.";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/registry/default/ui/select"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/registry/new-york/ui/dropdown-menu"
 
-  interface Product {
-    title: string;
-    description: string;
-    variation: string;
-    price: string;
-    exclusions: string;
-    interests: string[];
-    transportation: string;
-    guidance: string;
-    path: string;
-    requirements: string;
-  }
-
+interface Product {
+  title: string;
+  description: string;
+  variation: string;
+  price: string;
+  exclusions: string;
+  interests: string[];
+  transportation: string;
+  guidance: string;
+  path: string;
+  requirements: string;
+}
+interface Language {
+  code: string;
+  name: string;
+}
 const products: { [key: string]: Product } = {
   eidMubarakData: {
     "title": "Eid Mubarak",
@@ -70,8 +72,8 @@ const products: { [key: string]: Product } = {
     "title": "Journey to Madina",
     "description": "Embark on a spiritual pilgrimage to Madina, the second holiest city in Islam. Explore the Prophet's Mosque (Masjid النبوي) and other historical sites, experience the vibrant Islamic culture, and deepen your faith.",
     "variation": "Individual travel or Guided tour (Umrah packages available)",
-    "price": "Varies depending on travel time, origin, accommodation, and inclusions. Expect a range of \$2,000 - \$10,000+.",  // Placeholder for price range
-    "exclusions": "Typically excludes international flights, meals beyond breakfast at some hotels, personal expenses, and Saudi Arabia visa fees.",  // Placeholder for common exclusions
+    "price": "Varies depending on travel time, origin, accommodation, and inclusions. Expect a range of \$2,000 - \$10,000+.",
+    "exclusions": "Typically excludes international flights, meals beyond breakfast at some hotels, personal expenses, and Saudi Arabia visa fees.",
     "interests": ["Religion", "Pilgrimage", "History", "Culture", "Architecture"],
     "transportation": "Varies depending on your origin. Options include flights (consider nearby airports like Jeddah or Medina), buses (potentially long journeys depending on origin), or car travel (requires proper permits for international travel by car).",
     "guidance": "Consult a trusted travel agency specializing in Islamic pilgrimages. Visa and vaccination requirements may apply (check with Saudi Arabian authorities). Consider travel insurance and appropriate Islamic attire for religious sites. Learn basic Arabic phrases for a more enriching experience.",
@@ -84,11 +86,33 @@ let imageSrc: string[] = [
   "kabah.jpg",
   "madina.jpg"
 ]
+const desiredLanguages: Language[] = [
+  { code: "ar", name: "Arabic" },
+  { code: "bn", name: "Bengali" },
+  { code: "de", name: "German" },
+  { code: "en", name: "English" },
+  { code: "es", name: "Spanish" },
+  { code: "fr", name: "French" },
+  { code: "fa", name: "Persian" },
+  { code: "gu", name: "Gujarati" },
+  { code: "hi", name: "Hindi" },
+  { code: "it", name: "Italian" },
+  { code: "ko", name: "Korean" },
+  { code: "ms", name: "Malay" },
+  { code: "ml", name: "Malayalam" },
+  { code: "ps", name: "Pashto" },
+  { code: "pa", name: "Punjabi" },
+  { code: "pt", name: "Portuguese" },
+  { code: "ru", name: "Russian" },
+  { code: "sw", name: "Swahili" },
+  { code: "te", name: "Telugu" },
+  { code: "ta", name: "Tamil" },
+  { code: "tr", name: "Turkish" },
+  { code: "ur", name: "Urdu" },
+  { code: "zh", name: "Chinese" },
+];
 
 export default function SiteNFooter() {
-
-  const [isOpen2, setIsOpen2] = React.useState(false);
-  const [isOpen3, setIsOpen3] = React.useState(false);
 
   return (
     <div className="products flex items-start justify-start space-x-3 flex-row">
@@ -100,6 +124,45 @@ export default function SiteNFooter() {
         return (
           <Card key={productId} className="lg:w-[400px] h-auto ">
             <CardHeader className="pb-4 space-y-3">
+              <nav className="w-full h-auto mb-0 flex items-center justify-between">
+                <Select>
+                  <SelectTrigger className="w-[175px]">
+                    <SelectValue placeholder="Language(English)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {desiredLanguages.map((language) => (
+                      <SelectItem value={language.code}>{language.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="actions w-auto h-auto flex items-end justify-center">
+                  <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+                    <Pencil className="h-3.5 w-3.5" />
+                  </div>
+                  <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </div>
+                  <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Ellipsis className="h-3.5 w-3.5" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="center">
+                        <DropdownMenuItem>
+                          Like
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          Share
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          Save
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+
+              </nav>
               <AspectRatio ratio={16 / 9}>
                 <Image src={`/${imageSrc[imageIndex]}`} alt={product.title} fill={true} className="rounded-md object-cover" />
               </AspectRatio>
@@ -150,13 +213,8 @@ export default function SiteNFooter() {
               </Collapsible>
             </CardContent>
           </Card>
-
         )
-
-      }
-      )}
-
-
+      })}
     </div>
   )
 }

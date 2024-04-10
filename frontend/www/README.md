@@ -50,3 +50,13 @@
           </Collapsible>
         </CardContent>
       </Card> */}
+let title = "Amazing Day Trip to Sundarbans National Forest",
+  description = "Explore the natural wonders of the Sundarbans, the largest mangrove forest in the world, on this exciting day trip. Cruise through the lush waterways, spot diverse wildlife, and learn about the unique ecosystem.",
+  variation = "Private Tour or Group Tour",
+  price = "Boat transportation, park entrance fees, experienced guide, and lunch.",
+  exclusions = "Includes boat ride, park entry, guide, and lunch. Excludes travel to and from Khulna, personal expenses, and gratuities.",
+  interests = "Wildlife, nature, photography, boat tours",
+  transportation = "Local boat transportation within the Sundarbans",
+  guidance = "Experienced English-speaking guide throughout the tour",
+  path = "Khulna - Sundarbans National Forest - Khulna",
+  requirements = "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing.";
