@@ -14,6 +14,13 @@ import {
 } from "@/components/page-header"
 import { buttonVariants } from "@/registry/new-york/ui/button"
 import MailPage from "@/app/(app)/examples/mail/page"
+import translate from "@iamtraction/google-translate";
+
+translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
+  console.log(res.text);
+}).catch((err: any) => {
+  console.error(err);
+});
 
 export default function IndexPage() {
   return (
