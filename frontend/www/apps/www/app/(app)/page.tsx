@@ -1,3 +1,5 @@
+// "use client"
+// import React from "react";
 import Image from "next/image"
 import Link from "next/link"
 
@@ -28,7 +30,14 @@ import {
 } from "@/registry/default/ui/select"
 import { Button } from "@/registry/default/ui/button"
 import { Plus } from "lucide-react"
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
+import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
+import { ChevronsUpDown, X } from "lucide-react"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/registry/default/ui/collapsible"
+import SiteNFooter from "@/components/product"
 
 translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
   console.log(res.text);
@@ -37,6 +46,7 @@ translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
 });
 
 export default function IndexPage() {
+
   return (
     <div className="container relative">
       <PageHeader>
@@ -62,8 +72,8 @@ export default function IndexPage() {
         </PageActions>
       </PageHeader>
 
-      <div className="w-full h-[100vh] rounded-md flex items-start justify-start px-5 space-x-2">
-        <div className="w-full">
+      <div className="w-full h-[100vh] rounded-md flex flex-col items-start justify-start px-5 space-y-5">
+        <div className="w-full flex flex-row items-start justify-start space-x-2">
           <Input className="w-full" placeholder="Search your products..." />
           <Select>
             <SelectTrigger className="w-[180px]">
@@ -87,48 +97,8 @@ export default function IndexPage() {
             <Plus className="h-5 w-5" />
           </Button>
         </div>
+        <SiteNFooter />
 
-
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle>Running Shoes</CardTitle>
-            <CardDescription>Optimal footwear for your workout</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Path</h3>
-                <p className="text-sm leading-6">Running track or treadmill</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Requirements</h3>
-                <ul className="list-disc pl-5 text-sm">
-                  <li>Comfortable clothing</li>
-                  <li>Hydration</li>
-                  <li>Proper form</li>
-                </ul>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Variations</h3>
-              <ul className="list-disc pl-5 text-sm">
-                <li>Trail running shoes</li>
-                <li>Sprint spikes</li>
-                <li>Minimalist running shoes</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Guidance</h3>
-              <p className="text-sm leading-6">
-                Warm-up before running. Choose the right shoes for your running style. Maintain a proper running posture.
-              </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium tracking-wide uppercase sm:text-base">Price</h3>
-              <p className="text-2xl font-semibold">$89.99</p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* <ExamplesNav className="[&>a:first-child]:text-primary" />
