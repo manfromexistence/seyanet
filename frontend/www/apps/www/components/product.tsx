@@ -85,11 +85,7 @@ const products: { [key: string]: Product } = {
     "requirements": "Physical fitness for religious activities (walking, standing for prayers).  Appropriate clothing for Islamic sites (modest clothing that covers shoulders and knees for both men and women). Valid visa for Saudi Arabia (apply well in advance). Umrah pilgrimage may require additional permits depending on nationality."
   }
 };
-let imageSrc: string[] = [
-  "eid.jpg",
-  "kabah.jpg",
-  "madina.jpg"
-]
+
 const desiredLanguages: Language[] = [
   { code: "ar", name: "Arabic" },
   { code: "bn", name: "Bengali" },
@@ -116,39 +112,17 @@ const desiredLanguages: Language[] = [
   { code: "zh", name: "Chinese" },
 ];
 
-// import useSWR from 'swr';
+let imageSrc: string[] = [
+  "eid.jpg",
+  "kabah.jpg",
+  "madina.jpg"
+]
 
 interface ContentResponse {
   map: any;
   data: any[];
   error?: Error;
 }
-
-// const fetcher = async (): Promise<ContentResponse> => {
-//   const response = await fetch('/api/getAllData');
-//   if (!response.ok) {
-//     throw new Error('Error fetching data');
-//   }
-//   return await response.json();
-// };
-
-// function MyComponent() {
-//   const { data, error } = useSWR<ContentResponse>('/api/getAllData', fetcher);
-
-//   if (error) return <div>Error fetching data</div>;
-//   if (!data) return <div>Loading...</div>;
-
-//   return (
-//     <div>
-//       {data.map((language: { variation: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
-//         <div key={language.variation}>
-//           <h2>{language.title}</h2>
-//           <p>{language.description}</p>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
 
 const fetcher = async (url: string) => {
   const response = await axios.get(url);
@@ -161,33 +135,26 @@ export function MyComponent() {
   // if (error) return <div>Failed to load content: {error.message}</div>;
   // if (!data) return <div>Loading...</div>;
 
-  // // Access your fetched document data in `data`
-  // const { en, data: contentData } = data; // Extract specific fields or all data
-  // // Use contentData for rendering or further processing
+  // const { en, data: contentData } = data;
 
   return (
     <div>
-      {/* <h1>{en.title}</h1> */}
-      {/* <p>{contentData.ar.description}</p> */}
+      {/* <h1>{en.title}</h1>
+      <p>{contentData.ar.description}</p> */}
       <code>{JSON.stringify(data)}</code>
     </div>
   );
 }
 
-// const fetcher = async (url: RequestInfo | URL) => {
-//   const response = await fetch(url);
-//   if (!response.ok) {
-//     throw new Error('Failed to fetch content');
-//   }
-//   return await response.json();
-// };
-
-
-
 export default function SiteNFooter() {
 
+  // const { data, error } = useSWR("api/read", fetcher);
+
+  // if (error) return <div>Failed to load content: {error.message}</div>;
+  // if (!data) return <div>Loading...</div>;
+
   return (
-    <div className="products flex items-start justify-start space-x-3 flex-row">
+    <div className="flex items-start justify-start space-x-3 flex-row">
       {Object.keys(products).map((productId) => {
         const product: Product = products[productId];
         const imageIndex = Object.keys(products).indexOf(productId);
@@ -201,10 +168,20 @@ export default function SiteNFooter() {
                   <SelectTrigger className="w-[175px]">
                     <SelectValue placeholder="Default(English)" />
                   </SelectTrigger>
-                  <SelectContent>
+                  {/* <SelectContent>
                     {desiredLanguages.map((language) => (
                       <SelectItem key={language.code} value={language.code}>{language.name}</SelectItem>
                     ))}
+                  </SelectContent> */}
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectItem value="apple">Apple</SelectItem>
+                      <SelectItem value="banana">Banana</SelectItem>
+                      <SelectItem value="blueberry">Blueberry</SelectItem>
+                      <SelectItem value="grapes">Grapes</SelectItem>
+                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <div className="actions w-auto h-auto flex items-end justify-center">
@@ -287,7 +264,7 @@ export default function SiteNFooter() {
           </Card>
         )
       })}
-      {/* <MyComponent /> */}
+      <MyComponent />
     </div>
   )
 }
