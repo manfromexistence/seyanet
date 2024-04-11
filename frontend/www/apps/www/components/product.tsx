@@ -131,12 +131,6 @@ const fetcher = async (url: string) => {
 
 export function MyComponent() {
   const { data, error } = useSWR("api/getAllData", fetcher);
-
-  // if (error) return <div>Failed to load content: {error.message}</div>;
-  // if (!data) return <div>Loading...</div>;
-
-  // const { en, data: contentData } = data;
-
   return (
     <div>
       {/* <h1>{en.title}</h1>
