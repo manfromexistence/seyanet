@@ -137,7 +137,7 @@ function MyComponent() {
   return (
     <div>
       {data.map((language: { variation: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
-        <div key={language.index}>
+        <div key={language.variation}>
           <h2>{language.title}</h2>
           <p>{language.description}</p>
         </div>
@@ -158,16 +158,16 @@ export default function SiteNFooter() {
         const [isOpen, setIsOpen] = React.useState(false);
 
         return (
-          <Card key={productId} className="lg:w-[400px] h-auto ">
+          <Card key={productId} className="lg:w-[448px] h-auto ">
             <CardHeader className="pb-4 space-y-3">
               <nav className="w-full h-auto mb-0 flex items-center justify-between">
                 <Select>
                   <SelectTrigger className="w-[175px]">
-                    <SelectValue placeholder="Language(English)" />
+                    <SelectValue placeholder="Default(English)" />
                   </SelectTrigger>
                   <SelectContent>
                     {desiredLanguages.map((language) => (
-                      <SelectItem value={language.code}>{language.name}</SelectItem>
+                      <SelectItem key={language.code} value={language.code}>{language.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>

@@ -16,8 +16,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
             return res.status(404).json({ message: 'No content found' });
         }
 
-        const languages = Array.from(content);
-        res.status(200).json(languages);
+        // const languages = Array.from(content);
+        res.status(200).json(content);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -25,5 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
         await mongoose.disconnect();
     }
 };
+
+// handler();
 
 export default handler;

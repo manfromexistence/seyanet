@@ -13,7 +13,7 @@ let path: string = "Khulna - Sundarbans National Forest - Khulna";
 let requirements: string = "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing.m,/";
 
 export interface LanguageSchema {
-    code?: string;
+    imageUrl?: string;
     title: string;
     description: string;
     variation: string;
@@ -27,11 +27,7 @@ export interface LanguageSchema {
 }
 
 export const languageSchema: Schema<LanguageSchema> = new Schema({
-    code: {
-        type: String,
-        minlength: 2,
-        maxlength: 2,
-    },
+imageUrl: { type: String },
     title: { type: String, require: true },
     description: { type: String, require: true },
     variation: { type: String, require: true },
@@ -52,8 +48,6 @@ const contentSchema: Schema<{ translations: Map<string, LanguageSchema> }> = new
 });
 
 const Content = model('content', contentSchema);
-
-run().catch(err => console.log(err));
 
 async function run() {
 
@@ -108,5 +102,7 @@ async function run() {
 
     // translateAndSaveContent (desiredLanguages);
 }
+
+run()
 
 export default Content;
