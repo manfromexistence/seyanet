@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
-import Content, { languageSchema } from './db'; // Assuming your models directory is one level above
+import Content, { languageSchema } from './db';
 import { Schema, model, connect } from 'mongoose';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
