@@ -25,10 +25,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/registry/new-york/ui/dropdown-menu"
-import useSWR from 'swr';
-// import Content from '@/app/api/model';
+} from "@/registry/default/ui/dropdown-menu"
+import { Label } from "@/registry/default/ui/label"
+import { Input } from "@/registry/default/ui/input"
+import { Textarea } from "@/registry/default/ui/textarea"
 import axios from 'axios'
+import useSWR from 'swr';
 
 
 interface Product {
@@ -46,6 +48,11 @@ interface Product {
 interface Language {
   code: string;
   name: string;
+}
+interface ContentResponse {
+  map: any;
+  data: any[];
+  error?: Error;
 }
 const products: { [key: string]: Product } = {
   eidMubarakData: {
@@ -118,34 +125,86 @@ let imageSrc: string[] = [
   "madina.jpg"
 ]
 
-interface ContentResponse {
-  map: any;
-  data: any[];
-  error?: Error;
-}
+
 
 const fetcher = async (url: string) => {
   const response = await axios.get(url);
   return response.data;
 };
 
+
+export function productAction() {
+  return (
+    <div className="w-full max-w-2xl space-y-6">
+      <div className="space-y-2">
+        <Label htmlFor="title">Title</Label>
+        <Input id="title" placeholder="Title" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="description">Description</Label>
+        <Textarea id="description" placeholder="Description"/>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="requirements">Requirements</Label>
+        <Textarea id="requirements" placeholder="Requirements"/>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="variant">Variant</Label>
+        <Input id="variant" placeholder="Variant" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="price">Price</Label>
+        <Input id="price" placeholder="Price" type="number" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="guidance">Guidance</Label>
+        <Textarea id="guidance" placeholder="Guidance"/>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="exclusions">Exclusions</Label>
+        <Textarea id="exclusions" placeholder="Exclusions"/>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="path">Path</Label>
+        <Input id="path" placeholder="Path" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="transportation">Transportation</Label>
+        <Input id="transportation" placeholder="Transportation" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="interests">Interests</Label>
+        <Input id="interests" placeholder="Interests" />
+      </div>
+    </div>
+  )
+}
 export function MyComponent() {
   const { data, error } = useSWR("api/getAllData", fetcher);
+
+  if (error) return <div>Failed to load data: {error.message}</div>;
+  if (!data) return <div>Loading...</div>;
+  
   return (
     <div>
-      {/* <h1>{en.title}</h1>
-      <p>{contentData.ar.description}</p> */}
-      <code>{JSON.stringify(data)}</code>
+      {/* <code>{JSON.stringify(data)}</code> */}
+      {data.map((item: any,index: any) => {
+        <div key={index} className="flex items-start justify-start space-y-3 flex-row">
+          <span>{item.title}</span>
+          <span>{item.description}</span>
+          <span>{item.variant}</span>
+          <span>{item.price}</span>
+          <span>{item.guidance}</span>
+          <span>{item.requirements}</span>
+          <span>{item.interests}</span>
+          <span>{item.path}</span>
+          <span>{item.transportation}</span>
+        </div>
+      })}
     </div>
   );
 }
-
 export default function SiteNFooter() {
-
-  // const { data, error } = useSWR("api/read", fetcher);
-
-  // if (error) return <div>Failed to load content: {error.message}</div>;
-  // if (!data) return <div>Loading...</div>;
 
   return (
     <div className="flex items-start justify-start space-x-3 flex-row">
@@ -169,7 +228,7 @@ export default function SiteNFooter() {
                   </SelectContent> */}
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectLabel>Languages</SelectLabel>
                       <SelectItem value="apple">Apple</SelectItem>
                       <SelectItem value="banana">Banana</SelectItem>
                       <SelectItem value="blueberry">Blueberry</SelectItem>
@@ -262,4 +321,3 @@ export default function SiteNFooter() {
     </div>
   )
 }
-
