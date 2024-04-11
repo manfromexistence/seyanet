@@ -37,13 +37,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/registry/default/ui/collapsible"
-import SiteNFooter from "@/components/product"
+// import SiteNFooter from "@/components/product"
+import MyComponent from "@/components/product"
 
-translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
-  console.log(res.text);
-}).catch((err: any) => {
-  console.error(err);
-});
+// translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
+//   console.log(res.text);
+// }).catch((err: any) => {
+//   console.error(err);
+// });
 
 export default function IndexPage() {
 
@@ -97,7 +98,7 @@ export default function IndexPage() {
             <Plus className="h-5 w-5" />
           </Button>
         </div>
-        <SiteNFooter />
+        <MyComponent />
 
       </div>
     </div>

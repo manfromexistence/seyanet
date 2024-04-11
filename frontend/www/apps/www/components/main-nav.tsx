@@ -28,9 +28,9 @@ export function MainNav() {
             pathname === "/docs" ? "text-foreground" : "text-foreground/60"
           )}
         >
-          Docs
+          Hello, please pay me only 100$ through payooner.com
         </Link>
-        <Link
+        {/* <Link
           href="/docs/components"
           className={cn(
             "transition-colors hover:text-foreground/80",
@@ -81,7 +81,7 @@ export function MainNav() {
           )}
         >
           GitHub
-        </Link>
+        </Link> */}
       </nav>
     </div>
   )
