@@ -112,6 +112,42 @@ const desiredLanguages: Language[] = [
   { code: "zh", name: "Chinese" },
 ];
 
+import useSWR from 'swr';
+
+interface ContentResponse {
+  data: any[];
+  error?: Error;
+}
+
+const fetcher = async (): Promise<ContentResponse> => {
+  const response = await fetch('/api/getAllData');
+  if (!response.ok) {
+    throw new Error('Error fetching data');
+  }
+  return await response.json();
+};
+
+function MyComponent() {
+  const { data, error } = useSWR<ContentResponse>('/api/getAllData', fetcher);
+
+  if (error) return <div>Error fetching data</div>;
+  if (!data) return <div>Loading...</div>;
+
+  // Use the fetched data (data.data is an array of LanguageSchema objects)
+  return (
+    <div>
+      {data.data.map((language) => (
+        <div key={language.title}>
+          <h2>{language.title}</h2>
+          <p>{language.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+
 export default function SiteNFooter() {
 
   return (
@@ -215,6 +251,9 @@ export default function SiteNFooter() {
           </Card>
         )
       })}
+
+      <MyComponent />
     </div>
   )
 }
+
