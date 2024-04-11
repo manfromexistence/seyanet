@@ -179,53 +179,55 @@ export function productAction() {
     </div>
   )
 }
-export function MyComponent() {
+// export function MyComponent() {
+//   const { data, error } = useSWR("api/getAllData", fetcher);
+
+//   if (error) return <div>Failed to load data: {error.message}</div>;
+//   if (!data) return <div>Loading...</div>;
+
+//   return (
+//     <div>
+//       <code>{JSON.stringify(data)}</code>
+//       {data.map((item: any,index: any) => {
+//         <div key={index} className="flex items-start justify-start space-y-3 flex-row">
+//           <span>{item.title}</span>
+//           <span>{item.description}</span>
+//           <span>{item.variant}</span>
+//           <span>{item.price}</span>
+//           <span>{item.guidance}</span>
+//           <span>{item.requirements}</span>
+//           <span>{item.interests}</span>
+//           <span>{item.path}</span>
+//           <span>{item.transportation}</span>
+//         </div>
+//       })}
+//     </div>
+//   );
+// }
+export default function SiteNFooter() {
+
   const { data, error } = useSWR("api/getAllData", fetcher);
 
   if (error) return <div>Failed to load data: {error.message}</div>;
   if (!data) return <div>Loading...</div>;
-  
-  return (
-    <div>
-      {/* <code>{JSON.stringify(data)}</code> */}
-      {data.map((item: any,index: any) => {
-        <div key={index} className="flex items-start justify-start space-y-3 flex-row">
-          <span>{item.title}</span>
-          <span>{item.description}</span>
-          <span>{item.variant}</span>
-          <span>{item.price}</span>
-          <span>{item.guidance}</span>
-          <span>{item.requirements}</span>
-          <span>{item.interests}</span>
-          <span>{item.path}</span>
-          <span>{item.transportation}</span>
-        </div>
-      })}
-    </div>
-  );
-}
-export default function SiteNFooter() {
 
   return (
     <div className="flex items-start justify-start space-x-3 flex-row">
-      {Object.keys(products).map((productId) => {
-        const product: Product = products[productId];
-        const imageIndex = Object.keys(products).indexOf(productId);
-        const [isOpen, setIsOpen] = React.useState(false);
+      {data.map((item: any,index: any) => {
+
+        const product: any = data[index];
+        const imageIndex = Object.keys(data).indexOf(index);
+        // const [isOpen, setIsOpen] = React.useState(false);
 
         return (
-          <Card key={productId} className="flex-1 h-auto ">
+          <Card key={index} className="flex-1 h-auto ">
             <CardHeader className="pb-4 space-y-3">
               <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
                 <Select>
                   <SelectTrigger className="w-[175px]">
                     <SelectValue placeholder="Default(English)" />
                   </SelectTrigger>
-                  {/* <SelectContent>
-                    {desiredLanguages.map((language) => (
-                      <SelectItem key={language.code} value={language.code}>{language.name}</SelectItem>
-                    ))}
-                  </SelectContent> */}
+
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Languages</SelectLabel>
@@ -266,58 +268,18 @@ export default function SiteNFooter() {
 
               </nav>
               <AspectRatio ratio={16 / 9}>
-                <Image src={`/${imageSrc[imageIndex]}`} alt={product.title} fill={true} className="rounded-md object-cover" />
+                <Image src="/eid.jpg" alt="hi" fill={true} className="rounded-md object-cover" />
+                {/* <Image src={`/${imageSrc[imageIndex]}`} alt={product.data.en.title} fill={true} className="rounded-md object-cover" /> */}
               </AspectRatio>
-              <CardTitle>{product.title}</CardTitle>
-              <CardDescription>{product.description}</CardDescription>
+              <CardTitle>op</CardTitle>
+              <CardDescription>op</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
 
-              <Collapsible
-                open={isOpen}
-                onOpenChange={setIsOpen}
-                className="w-full space-y-2"
-              >
-                <div className="flex items-center justify-between space-x-4 px-4">
-                  <h4 className="text-sm font-semibold">
-                    See more...
-                  </h4>
-                  <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm" className="w-9 p-0">
-                      <ChevronsUpDown className="h-4 w-4" />
-                      <span className="sr-only">Toggle</span>
-                    </Button>
-                  </CollapsibleTrigger>
-                </div>
-                <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                  Variation: {product.variation}
-                </div>
-                <CollapsibleContent className="space-y-2">
-                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                    Price: {product.price}
-                  </div>
-                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                    Exclusions: {product.exclusions}
-                  </div>
-                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                    Interesst: {product.interests}
-                  </div>
-                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                    Transportation: {product.transportation}
-                  </div>
-                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                    Guidence: {product.guidance}
-                  </div>
-                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                    Requirements: {product.requirements}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
             </CardContent>
           </Card>
         )
       })}
-      <MyComponent />
     </div>
   )
 }

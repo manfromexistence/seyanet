@@ -97,7 +97,7 @@ export default function IndexPage() {
             <Plus className="h-5 w-5" />
           </Button>
         </div>
-        {/* <SiteNFooter /> */}
+        <SiteNFooter />
 
       </div>
     </div>

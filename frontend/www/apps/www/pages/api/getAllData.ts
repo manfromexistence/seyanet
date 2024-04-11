@@ -5,7 +5,7 @@ import Content from './model';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     await connectDB();
-    const content = await Content.findOne({});
+    const content = await Content.find({});
 
     if (!content) {
       return res.status(404).json({ message: 'Content not found' });
