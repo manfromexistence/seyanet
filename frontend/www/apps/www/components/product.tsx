@@ -180,224 +180,77 @@ export function productAction() {
   )
 }
 
-export function MyComponent() {
-  // const [data, setData] = useState(null); // Initial state: no data loaded
-  // const [error, setError] = useState(null); // Initial state: no error
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch("api/getAllData"); // Replace with your actual endpoint
-  //       if (!response.ok) {
-  //         throw new Error(`Failed to fetch data: ${response.statusText}`);
-  //       }
-  //       const jsonData = await response.json();
-  //       setData(jsonData);
-  //     } catch (error:any) {
-  //       setError(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []); // Empty dependency array: fetch data only once on component mount
-
-  // if (error) {
-  //   return <div>Failed to load data: {error}</div>;
-  // }
-
-  // if (!data) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // const renderData = data.map((item: { data: { en: {}; }; _id: React.Key | null | undefined; }) => {
-  //   const { title, description } = item.data?.en || {}; // Safe nullish coalescing for 'en' property
-
-  //   return (
-  //     <div key={item._id}>
-  //       <h1>{title}</h1>
-  //       <p>{description}</p>
-  //     </div>
-  //   );
-  // });
-
-  // return (
-  //   <div>
-  //     {renderData}
-  //   </div>
-  const { data, error } = useSWR("api/getAllData", fetcher);
-
-  if (error) return <div>Failed to load data: {error.message}</div>;
-  if (!data) return <div>Loading...</div>;
-
-  const renderData = data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }) => {
-    const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.bn || {};;
-
-    return (
-      <div key={item._id}>
-        <span>{title}</span>
-        <span>{description}</span>
-        <span>{variation}</span>
-        <span>{price}</span>
-        <span>{guidance}</span>
-        <span>{requirements}</span>
-        <span>{interests}</span>
-        <span>{path}</span>
-        <span>{transportation}</span>
-      </div>
-    );
-  });
+// export function collapsibleCustomize() {
+//   return (
 
 
-  return (
-    <div>
-      {/* <code>{JSON.stringify(data)}</code> */}
-      {renderData}
+//   )
+// }
 
-      {/* {data.map((item: any,index: any) => {
-        <div key={index} className="flex items-start justify-start space-y-3 flex-row">
-          <span>{item.title}</span>
-          <span>{item.description}</span>
-          <span>{item.variant}</span>
-          <span>{item.price}</span>
-          <span>{item.guidance}</span>
-          <span>{item.requirements}</span>
-          <span>{item.interests}</span>
-          <span>{item.path}</span>
-          <span>{item.transportation}</span>
-        </div>
-      })} */}
-    </div>
-  );
-}
+// export function MyComponent() {
+
+//   const { data, error } = useSWR("api/getAllData", fetcher);
+
+//   if (error) return <div>Failed to load data: {error.message}</div>;
+//   if (!data) return <div>Loading...</div>;
+
+//   const renderData = data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }) => {
+//     const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.bn || {};;
+
+//     return (
+//       <div key={item._id}>
+//         <span>{title}</span>
+//         <span>{description}</span>
+//         <span>{variation}</span>
+//         <span>{price}</span>
+//         <span>{guidance}</span>
+//         <span>{requirements}</span>
+//         <span>{interests}</span>
+//         <span>{path}</span>
+//         <span>{transportation}</span>
+//       </div>
+//     );
+//   });
+
+
+//   return (
+//     <div>
+//       {/* <code>{JSON.stringify(data)}</code> */}
+//       {renderData}
+
+//       {/* {data.map((item: any,index: any) => {
+//         <div key={index} className="flex items-start justify-start space-y-3 flex-row">
+//           <span>{item.title}</span>
+//           <span>{item.description}</span>
+//           <span>{item.variant}</span>
+//           <span>{item.price}</span>
+//           <span>{item.guidance}</span>
+//           <span>{item.requirements}</span>
+//           <span>{item.interests}</span>
+//           <span>{item.path}</span>
+//           <span>{item.transportation}</span>
+//         </div>
+//       })} */}
+//     </div>
+//   );
+// }
 
 export default function SiteNFooter() {
 
   const { data, error } = useSWR("api/getAllData", fetcher);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [language, setLanguage] = useState("bn");
+  const [isOpen, setIsOpen] = useState(false);
 
   if (error) return <div>Failed to load data: {error.message}</div>;
   if (!data) return <div>Loading...</div>;
 
-  const renderData = data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }, index: number) => {
-    const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.bn || {};;
-
-    return (
-      <Card key={item._id} className="flex-1 h-auto ">
-        <CardHeader className="pb-4 space-y-3">
-          <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
-            <Select>
-              <SelectTrigger className="w-[175px]">
-                <SelectValue placeholder="Default(English)" />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Languages</SelectLabel>
-                  {/* <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem> */}
-                  {desiredLanguages.map((language) => (
-                    <SelectItem key={language.code} value={language.code}>{language.name}</SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <div className="actions w-auto h-auto flex items-end justify-center">
-              <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
-                <Pencil className="h-3.5 w-3.5" />
-              </div>
-              <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
-                <Trash2 className="h-3.5 w-3.5" />
-              </div>
-              <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Ellipsis className="h-3.5 w-3.5" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center">
-                    <DropdownMenuItem>
-                      Like
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Share
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Save
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-
-          </nav>
-          <AspectRatio ratio={16 / 9}>
-            <Image src={`/${imageSrc[index]}`} alt={title} fill={true} className="rounded-md object-cover" />
-          </AspectRatio>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Collapsible
-            open={isOpen}
-            onOpenChange={setIsOpen}
-            className="w-full space-y-2"
-          >
-            <div className="flex items-center justify-between space-x-4 px-4">
-              <h4 className="text-sm font-semibold">
-                See more...
-              </h4>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                  <ChevronsUpDown className="h-4 w-4" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            <div className="rounded-md border px-4 py-3 font-mono text-sm">
-              Variation: {variation}
-            </div>
-            <CollapsibleContent className="space-y-2">
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Price: {price}
-              </div>
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Path: {path}
-              </div>
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Exclusions: {exclusions}
-              </div>
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Interesst: {interests}
-              </div>
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Transportation: {transportation}
-              </div>
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Guidence: {guidance}
-              </div>
-              <div className="rounded-md border px-4 py-3 font-mono text-sm">
-                Requirements: {requirements}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </CardContent>
-      </Card>
-    );
-  });
-
   return (
     <div className="flex items-start justify-start space-x-3 flex-row">
-
-      {renderData}
-      {/* {data.map((item: any,index: any) => {
-
-        const product: any = data[index];
-        const imageIndex = Object.keys(data).indexOf(index);
+      {data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }, index: number) => {
+        const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.language || {};
 
         return (
-          <Card key={index} className="flex-1 h-auto ">
+          <Card key={item._id} className="flex-1 h-auto ">
             <CardHeader className="pb-4 space-y-3">
               <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
                 <Select>
@@ -408,11 +261,9 @@ export default function SiteNFooter() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Languages</SelectLabel>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                      {desiredLanguages.map((language, index) => (
+                        <SelectItem onClick={() => setLanguage(language.code)} key={index} value={language.code}>{language.name}</SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -445,17 +296,60 @@ export default function SiteNFooter() {
 
               </nav>
               <AspectRatio ratio={16 / 9}>
-                <Image src="/eid.jpg" alt="hi" fill={true} className="rounded-md object-cover" />
+                <Image src={`/${imageSrc[index]}`} alt={title} fill={true} className="rounded-md object-cover" />
               </AspectRatio>
-              <CardTitle>{item}</CardTitle>
-              <CardDescription>op</CardDescription>
+              <CardTitle>{title}</CardTitle>
+              <CardDescription>{description}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-
+              <Collapsible
+                open={isOpen}
+                onOpenChange={setIsOpen}
+                className="w-full space-y-2"
+              >
+                <div className="flex items-center justify-between space-x-4 px-4">
+                  <h4 className="text-sm font-semibold">
+                    See more...
+                  </h4>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="w-9 p-0">
+                      <ChevronsUpDown className="h-4 w-4" />
+                      <span className="sr-only">Toggle</span>
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                  Variation: {variation}
+                </div>
+                <CollapsibleContent className="space-y-2">
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Price: {price}
+                  </div>
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Path: {path}
+                  </div>
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Exclusions: {exclusions}
+                  </div>
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Interesst: {interests}
+                  </div>
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Transportation: {transportation}
+                  </div>
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Guidence: {guidance}
+                  </div>
+                  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                    Requirements: {requirements}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </CardContent>
           </Card>
-        )
-      })} */}
+        );
+      })}
+
     </div>
   )
 }

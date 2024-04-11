@@ -37,7 +37,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/registry/default/ui/collapsible"
-import SiteNFooter, { MyComponent } from "@/components/product"
+import SiteNFooter from "@/components/product"
 
 translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
   console.log(res.text);
