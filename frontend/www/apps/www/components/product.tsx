@@ -3,13 +3,19 @@
 import { Button } from "@/registry/default/ui/button"
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
 import { ChevronsUpDown, Ellipsis, Pencil, Trash2, X } from "lucide-react"
+import { AspectRatio } from "@/registry/default/ui/aspect-ratio";
+import { Label } from "@/registry/default/ui/label"
+import { Input } from "@/registry/default/ui/input"
+import { Textarea } from "@/registry/default/ui/textarea"
+import axios from 'axios'
+import useSWR from 'swr';
+import React, { useState, useEffect } from 'react';
+import Image from "next/image"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/registry/default/ui/collapsible"
-import Image from "next/image"
-import { AspectRatio } from "@/registry/default/ui/aspect-ratio";
 import {
   Select,
   SelectContent,
@@ -25,12 +31,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
-import { Label } from "@/registry/default/ui/label"
-import { Input } from "@/registry/default/ui/input"
-import { Textarea } from "@/registry/default/ui/textarea"
-import axios from 'axios'
-import useSWR from 'swr';
-import React, { useState, useEffect } from 'react';
+
 
 interface Product {
   title: string;
@@ -228,14 +229,20 @@ export function MyComponent() {
   if (error) return <div>Failed to load data: {error.message}</div>;
   if (!data) return <div>Loading...</div>;
 
-  const renderData = data.map((item: { data: { en: { title: any; description: any; }; }; _id: React.Key | null | undefined; }) => {
-    const { title, description } = item.data?.en || {};;
+  const renderData = data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }) => {
+    const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.bn || {};;
 
     return (
       <div key={item._id}>
-        {/* <h1>{!item ? title: "title"}</h1> */}
-        <h1>{title}</h1>
-        <h1>Hello</h1>
+        <span>{title}</span>
+        <span>{description}</span>
+        <span>{variation}</span>
+        <span>{price}</span>
+        <span>{guidance}</span>
+        <span>{requirements}</span>
+        <span>{interests}</span>
+        <span>{path}</span>
+        <span>{transportation}</span>
       </div>
     );
   });
@@ -266,13 +273,124 @@ export function MyComponent() {
 export default function SiteNFooter() {
 
   const { data, error } = useSWR("api/getAllData", fetcher);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   if (error) return <div>Failed to load data: {error.message}</div>;
   if (!data) return <div>Loading...</div>;
 
+  const renderData = data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }, index: number) => {
+    const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.bn || {};;
+
+    return (
+      <Card key={item._id} className="flex-1 h-auto ">
+        <CardHeader className="pb-4 space-y-3">
+          <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
+            <Select>
+              <SelectTrigger className="w-[175px]">
+                <SelectValue placeholder="Default(English)" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Languages</SelectLabel>
+                  {/* <SelectItem value="apple">Apple</SelectItem>
+                      <SelectItem value="banana">Banana</SelectItem>
+                      <SelectItem value="blueberry">Blueberry</SelectItem>
+                      <SelectItem value="grapes">Grapes</SelectItem>
+                      <SelectItem value="pineapple">Pineapple</SelectItem> */}
+                  {desiredLanguages.map((language) => (
+                    <SelectItem key={language.code} value={language.code}>{language.name}</SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <div className="actions w-auto h-auto flex items-end justify-center">
+              <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+                <Pencil className="h-3.5 w-3.5" />
+              </div>
+              <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+                <Trash2 className="h-3.5 w-3.5" />
+              </div>
+              <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Ellipsis className="h-3.5 w-3.5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center">
+                    <DropdownMenuItem>
+                      Like
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Share
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Save
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+
+          </nav>
+          <AspectRatio ratio={16 / 9}>
+            <Image src={`/${imageSrc[index]}`} alt={title} fill={true} className="rounded-md object-cover" />
+          </AspectRatio>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Collapsible
+            open={isOpen}
+            onOpenChange={setIsOpen}
+            className="w-full space-y-2"
+          >
+            <div className="flex items-center justify-between space-x-4 px-4">
+              <h4 className="text-sm font-semibold">
+                See more...
+              </h4>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="w-9 p-0">
+                  <ChevronsUpDown className="h-4 w-4" />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            <div className="rounded-md border px-4 py-3 font-mono text-sm">
+              Variation: {variation}
+            </div>
+            <CollapsibleContent className="space-y-2">
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Price: {price}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Path: {path}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Exclusions: {exclusions}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Interesst: {interests}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Transportation: {transportation}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Guidence: {guidance}
+              </div>
+              <div className="rounded-md border px-4 py-3 font-mono text-sm">
+                Requirements: {requirements}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </CardContent>
+      </Card>
+    );
+  });
+
   return (
     <div className="flex items-start justify-start space-x-3 flex-row">
-      {data}
+
+      {renderData}
       {/* {data.map((item: any,index: any) => {
 
         const product: any = data[index];
