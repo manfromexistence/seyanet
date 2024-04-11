@@ -18,16 +18,26 @@ interface Language {
   name: string;
 }
 
-let title: string = "Eid Mubarak";
-let description: string = "A joyous Islamic holiday celebrating the end of Ramadan Eid al-Fitr or honoring Abraham's sacrifice Eid al-Adha.";
-let variation: string = "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)";
-let price: string = "free!"; 
-let exclusions: string = "free!";
-let interests: any = "Celebration";
-let transportation: string = "Varies depending on location, but may involve visiting mosques or family gatherings.";
-let guidance: string = "Greetings: Eid Mubarak | Traditional clothing encouraged | Gift-giving (optional)";
-let path: string = "as you wish!";
-let requirements: string = "Varies depending on location and traditions, but may involve attending prayers or family gatherings.";
+// let title: string = "Eid Mubarak";
+// let description: string = "A joyous Islamic holiday celebrating the end of Ramadan Eid al-Fitr or honoring Abraham's sacrifice Eid al-Adha.";
+// let variation: string = "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)";
+// let price: string = "free!"; 
+// let exclusions: string = "free!";
+// let interests: any = "Celebration";
+// let transportation: string = "Varies depending on location, but may involve visiting mosques or family gatherings.";
+// let guidance: string = "Greetings: Eid Mubarak | Traditional clothing encouraged | Gift-giving (optional)";
+// let path: string = "as you wish!";
+// let requirements: string = "Varies depending on location and traditions, but may involve attending prayers or family gatherings.";
+let title = "Amazing Day Trip to Sundarbans National Forest",
+  description = "Explore the natural wonders of the Sundarbans, the largest mangrove forest in the world, on this exciting day trip. Cruise through the lush waterways, spot diverse wildlife, and learn about the unique ecosystem.",
+  variation = "Private Tour or Group Tour",
+  price = "Boat transportation, park entrance fees, experienced guide, and lunch.",
+  exclusions = "Includes boat ride, park entry, guide, and lunch. Excludes travel to and from Khulna, personal expenses, and gratuities.",
+  interests = "Wildlife, nature, photography, boat tours",
+  transportation = "Local boat transportation within the Sundarbans",
+  guidance = "Experienced English-speaking guide throughout the tour",
+  path = "Khulna - Sundarbans National Forest - Khulna",
+  requirements = "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing.";
 
 
 const products: { [key: string]: Product } = {
@@ -70,38 +80,38 @@ const products: { [key: string]: Product } = {
 };
 
 export interface LanguageSchema {
-    imageUrl?: string;
-    title: string;
-    description: string;
-    variation: string;
-    price: string;
-    exclusions: string;
-    interests: string;
-    transportation: string;
-    guidance: string;
-    path: string;
-    requirements: string;
+  imageUrl?: string;
+  title: string;
+  description: string;
+  variation: string;
+  price: string;
+  exclusions: string;
+  interests: string;
+  transportation: string;
+  guidance: string;
+  path: string;
+  requirements: string;
 }
 
 export const languageSchema: Schema<LanguageSchema> = new Schema({
-    imageUrl: { type: String },
-    title: { type: String, require: true },
-    description: { type: String, require: true },
-    variation: { type: String, require: true },
-    price: { type: String, require: true },
-    exclusions: { type: String, require: true },
-    interests: { type: String, require: true },
-    transportation: { type: String, require: true },
-    guidance: { type: String, require: true },
-    path: { type: String, require: true },
-    requirements: { type: String, require: true },
+  imageUrl: { type: String },
+  title: { type: String, require: true },
+  description: { type: String, require: true },
+  variation: { type: String, require: true },
+  price: { type: String, require: true },
+  exclusions: { type: String, require: true },
+  interests: { type: String, require: true },
+  transportation: { type: String, require: true },
+  guidance: { type: String, require: true },
+  path: { type: String, require: true },
+  requirements: { type: String, require: true },
 });
 
 const contentSchema: Schema<{ translations: Map<string, LanguageSchema> }> = new Schema({
-    translations: {
-        type: Map,
-        of: languageSchema,
-    },
+  translations: {
+    type: Map,
+    of: languageSchema,
+  },
 });
 
 const Content = model('content', contentSchema);
@@ -110,51 +120,51 @@ run().catch(err => console.log(err));
 
 async function run() {
 
-    await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
+  await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
 
-      async function translateAndSaveContent(languages: string[]) {
-        const translations: { [key: string]: LanguageSchema } = {};
-        for (const lang of languages) {
-          try {
-            const translatedTitle = await translate(title, { to: lang });
-            const translatedDescription = await translate(description, { to: lang });
-            const translatedVariation = await translate(variation, { to: lang });
-            const translatedPrice = await translate(price, { to: lang });
-            const translatedExclusions = await translate(exclusions, { to: lang });
-            const translatedInterests = await translate(interests, { to: lang });
-            const translatedTransportation = await translate(transportation, { to: lang });
-            const translatedGuidance = await translate(guidance, { to: lang });
-            const translatePath = await translate(path, { to: lang });
-            const translateRequirements = await translate(requirements, { to: lang });
+  async function translateAndSaveContent(languages: string[]) {
+    const translations: { [key: string]: LanguageSchema } = {};
+    for (const lang of languages) {
+      try {
+        const translatedTitle = await translate(title, { to: lang });
+        const translatedDescription = await translate(description, { to: lang });
+        const translatedVariation = await translate(variation, { to: lang });
+        const translatedPrice = await translate(price, { to: lang });
+        const translatedExclusions = await translate(exclusions, { to: lang });
+        const translatedInterests = await translate(interests, { to: lang });
+        const translatedTransportation = await translate(transportation, { to: lang });
+        const translatedGuidance = await translate(guidance, { to: lang });
+        const translatePath = await translate(path, { to: lang });
+        const translateRequirements = await translate(requirements, { to: lang });
 
-            translations[lang] = {
-                title: translatedTitle.text,
-                description: translatedDescription.text,
-                variation: translatedVariation.text,
-                price: translatedPrice.text,
-                exclusions: translatedExclusions.text,
-                interests: translatedInterests.text,
-                transportation: translatedTransportation.text,
-                guidance: translatedGuidance.text,
-                path: translatePath.text,
-                requirements: translateRequirements.text,
-            };
-          } catch (err) {
-            console.error(`Error translating to ${lang}: ${err}`);
-          }
-        }
-
-        const dataResult = await Content.find({});
-        console.log(`all translations=${translations} and all dataResult=${dataResult}`);
-
-        const newContent = new Content({ data: translations });
-        await newContent.save()
-          .then(() => console.log("Content saved successfully"))
-          .catch((err) => console.error("Error saving content:", err));
-
+        translations[lang] = {
+          title: translatedTitle.text,
+          description: translatedDescription.text,
+          variation: translatedVariation.text,
+          price: translatedPrice.text,
+          exclusions: translatedExclusions.text,
+          interests: translatedInterests.text,
+          transportation: translatedTransportation.text,
+          guidance: translatedGuidance.text,
+          path: translatePath.text,
+          requirements: translateRequirements.text,
+        };
+      } catch (err) {
+        console.error(`Error translating to ${lang}: ${err}`);
       }
+    }
 
-    const desiredLanguages: string[] = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh-cn"];
+    // const dataResult = await Content.find({});
+    // console.log(`all translations=${translations} and all dataResult=${dataResult}`);
 
-    translateAndSaveContent (desiredLanguages);
+    const newContent = new Content({ data: translations });
+    await newContent.save()
+      .then(() => console.log("Content saved successfully"))
+      .catch((err) => console.error("Error saving content:", err));
+
+  }
+
+  const desiredLanguages: string[] = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh-cn"];
+
+  translateAndSaveContent(desiredLanguages);
 }
