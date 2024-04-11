@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
+
 import devModeReducer from "./devModeSlice"
 
 export function makeStore() {

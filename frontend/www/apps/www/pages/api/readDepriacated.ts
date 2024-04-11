@@ -1,17 +1,17 @@
-import ProductModel from './model';
-import connectDB from './db';
+import connectDB from "./db"
+import ProductModel from "./model"
 
 const getAllProducts = async () => {
   try {
-    await connectDB();
+    await connectDB()
 
-    const products = await ProductModel.find();
-    console.log('Products:', products);
+    const products = await ProductModel.find()
+    console.log("Products:", products)
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error("Error fetching products:", error)
   }
-};
+}
 
-(async () => {
-  await getAllProducts();
-})();
+;(async () => {
+  await getAllProducts()
+})()

@@ -1,21 +1,35 @@
 "use client"
 
-import { Button } from "@/registry/default/ui/button"
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
-import { ChevronsUpDown, Ellipsis, Pencil, Trash2, X } from "lucide-react"
-import { AspectRatio } from "@/registry/default/ui/aspect-ratio";
-import { Label } from "@/registry/default/ui/label"
-import { Input } from "@/registry/default/ui/input"
-import { Textarea } from "@/registry/default/ui/textarea"
-import axios from 'axios'
-import useSWR from 'swr';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
+import axios from "axios"
+import { ChevronsUpDown, Ellipsis, Pencil, Trash2, X } from "lucide-react"
+import useSWR from "swr"
+
+import { AspectRatio } from "@/registry/default/ui/aspect-ratio"
+import { Button } from "@/registry/default/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/registry/default/ui/card"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/registry/default/ui/collapsible"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/registry/default/ui/dropdown-menu"
+import { Input } from "@/registry/default/ui/input"
+import { Label } from "@/registry/default/ui/label"
 import {
   Select,
   SelectContent,
@@ -25,36 +39,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/registry/default/ui/dropdown-menu"
-
+import { Textarea } from "@/registry/default/ui/textarea"
 
 interface Product {
-  title: string;
-  description: string;
-  variation: string;
-  price: string;
-  exclusions: string;
-  interests: string[];
-  transportation: string;
-  guidance: string;
-  path: string;
-  requirements: string;
+  title: string
+  description: string
+  variation: string
+  price: string
+  exclusions: string
+  interests: string[]
+  transportation: string
+  guidance: string
+  path: string
+  requirements: string
 }
 interface Language {
-  code: string;
-  name: string;
+  code: string
+  name: string
 }
 interface ContentResponse {
-  map: any;
-  data: any[];
-  error?: Error;
+  map: any
+  data: any[]
+  error?: Error
 }
 // const products: { [key: string]: Product } = {
 //   eidMubarakData: {
@@ -119,21 +125,14 @@ const desiredLanguages: Language[] = [
   { code: "tr", name: "Turkish" },
   { code: "ur", name: "Urdu" },
   { code: "zh", name: "Chinese" },
-];
-
-let imageSrc: string[] = [
-  "eid.jpg",
-  "kabah.jpg",
-  "madina.jpg"
 ]
 
-
+let imageSrc: string[] = ["eid.jpg", "kabah.jpg", "madina.jpg"]
 
 const fetcher = async (url: string) => {
-  const response = await axios.get(url);
-  return response.data;
-};
-
+  const response = await axios.get(url)
+  return response.data
+}
 
 export function productAction() {
   return (
@@ -185,7 +184,6 @@ export function productAction() {
 // export function collapsibleCustomize() {
 //   return (
 
-
 //   )
 // }
 
@@ -214,7 +212,6 @@ export function productAction() {
 //   );
 // });
 
-
 //   // return (
 //   //   <div>
 //   //     {/* <code>{JSON.stringify(data)}</code> */}
@@ -242,7 +239,6 @@ export function productAction() {
 //     <p>{description}</p>
 //   </div>
 // );
-
 
 // export default function SiteNFooter() {
 
@@ -300,19 +296,17 @@ export function productAction() {
 //   );
 // }
 
-
-
 // Interface for JSON data structure (adapt as needed)
 interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  userId: number
+  id: number
+  title: string
+  body: string
 }
 interface Products {
-  _id?: string;
-  __v: any;
-  data: Product;
+  _id?: string
+  __v: any
+  data: Product
 }
 
 const MyComponent: React.FC = () => {
@@ -330,98 +324,121 @@ const MyComponent: React.FC = () => {
 
   //   fetchData();
   // }, []);
-  const { data, error } = useSWR("api/getAllData", fetcher);
+  const { data, error } = useSWR("api/getAllData", fetcher)
 
-  if (error) return <div>Failed to load data: {error.message}</div>;
-  if (!data) return <div>Loading...</div>;
+  if (error) return <div>Failed to load data: {error.message}</div>
+  if (!data) return <div>Loading...</div>
 
   return (
-    <div className="flex items-start justify-start space-x-3 flex-row">
+    <div className="flex flex-row items-start justify-start space-x-3">
       {data.map((item: Products, index: number) => (
-        <ProductDetails key={item._id} index={index} dataObj={item.data} __v={item.__v} />
+        <ProductDetails
+          key={item._id}
+          index={index}
+          dataObj={item.data}
+          __v={item.__v}
+        />
       ))}
     </div>
-  );
-};
+  )
+}
 
-const ProductDetails: React.FC<{ dataObj: any; __v: any, index: number }> = ({
+const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
   dataObj,
-  __v, index
+  __v,
+  index,
 }) => {
-  const [language, setLanguage] = useState("en");
-  const [isOpen, setIsOpen] = useState(false);
+  const [language, setLanguage] = useState("en")
+  const [isOpen, setIsOpen] = useState(false)
 
-  const [currentData, setCurrentData] = useState<any>({}); // Store data for current language
+  const [currentData, setCurrentData] = useState<any>({}) // Store data for current language
   function getLanguageName(code: string): string | undefined {
-    const language = desiredLanguages.find((lang) => lang.code === code);
-    return language?.name; // Use optional chaining for potential undefined language
+    const language = desiredLanguages.find((lang) => lang.code === code)
+    return language?.name // Use optional chaining for potential undefined language
   }
-  
+
   // Fetch data on component mount (replace with your actual data fetching logic)
   useEffect(() => {
-    const fetchedData = dataObj || {}; // Use dataObj directly if already fetched
-    setCurrentData(fetchedData[language] || {});
-  }, [language, dataObj]); // Re-run when language or dataObj changes
+    const fetchedData = dataObj || {} // Use dataObj directly if already fetched
+    setCurrentData(fetchedData[language] || {})
+  }, [language, dataObj]) // Re-run when language or dataObj changes
 
   const handleLanguageChange = (newLanguage: string) => {
     if (desiredLanguages.find((lang) => lang.code === newLanguage)) {
-      setLanguage(newLanguage);
+      setLanguage(newLanguage)
     } else {
-      console.warn(`Language "${newLanguage}" not found in desiredLanguages`);
+      console.warn(`Language "${newLanguage}" not found in desiredLanguages`)
     }
-  };
+  }
 
-  const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = dataObj?.[language] || {};
+  const {
+    title,
+    description,
+    variation,
+    price,
+    guidance,
+    requirements,
+    interests,
+    path,
+    transportation,
+    exclusions,
+  } = dataObj?.[language] || {}
 
   return (
-    <Card className="flex-1 h-auto">
-      <CardHeader className="pb-4 space-y-3">
-        <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
+    <Card className="h-auto flex-1">
+      <CardHeader className="space-y-3 pb-4">
+        <nav className="min-lg:h-[565px] mb-0 flex h-min w-full items-center justify-between">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <span className="p-3 text-sm border rounded-md hover:bg[hsl(var(--primary))]">Selected ({getLanguageName(language)})</span>
+              <span className="hover:bg[hsl(var(--primary))] rounded-md border p-3 text-sm">
+                Selected ({getLanguageName(language)})
+              </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Browse contents in your desired language</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                Browse contents in your desired language
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
-  
+
               {desiredLanguages.map((language, index) => (
-                <DropdownMenuItem onClick={() => handleLanguageChange(language.code)} key={index}>{language.name}</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleLanguageChange(language.code)}
+                  key={index}
+                >
+                  {language.name}
+                </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
-
-          <div className="actions w-auto h-auto flex items-end justify-center">
-            <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+          <div className="actions flex h-auto w-auto items-end justify-center">
+            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <Pencil className="h-3.5 w-3.5" />
             </div>
-            <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <Trash2 className="h-3.5 w-3.5" />
             </div>
-            <div className="p-3 flex items-center justify-center rounded-full border hover:bg-[hsl(var(--secondary))]">
+            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Ellipsis className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="center">
-                  <DropdownMenuItem>
-                    Like
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    Share
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    Save
-                  </DropdownMenuItem>
+                  <DropdownMenuItem>Like</DropdownMenuItem>
+                  <DropdownMenuItem>Share</DropdownMenuItem>
+                  <DropdownMenuItem>Save</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
-
         </nav>
         <AspectRatio ratio={16 / 9}>
-          <Image src={`/${imageSrc[index]}`} alt={title} fill={true} className="rounded-md object-cover" />
+          <Image
+            src={`/${imageSrc[index]}`}
+            alt={title}
+            fill={true}
+            className="rounded-md object-cover"
+          />
         </AspectRatio>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -439,9 +456,7 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any, index: number }> = ({
           className="w-full space-y-2"
         >
           <div className="flex items-center justify-between space-x-4 px-4">
-            <h4 className="text-sm font-semibold">
-              See more...
-            </h4>
+            <h4 className="text-sm font-semibold">See more...</h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm" className="w-9 p-0">
                 <ChevronsUpDown className="h-4 w-4" />
@@ -478,7 +493,7 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any, index: number }> = ({
         </Collapsible>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default MyComponent;
+export default MyComponent

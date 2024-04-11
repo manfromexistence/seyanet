@@ -2,10 +2,13 @@
 // import React from "react";
 import Image from "next/image"
 import Link from "next/link"
+import translate from "@iamtraction/google-translate"
+import { ChevronsUpDown, Plus, X } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Announcement } from "@/components/announcement"
+import { CommandMenu } from "@/components/command-menu"
 import { ExamplesNav } from "@/components/examples-nav"
 import { Icons } from "@/components/icons"
 import {
@@ -14,10 +17,21 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header"
-import { buttonVariants } from "@/registry/new-york/ui/button"
-import MailPage from "@/app/(app)/examples/mail/page"
-import translate from "@iamtraction/google-translate";
-import { CommandMenu } from "@/components/command-menu"
+// import SiteNFooter from "@/components/product"
+import MyComponent from "@/components/product"
+import { Button } from "@/registry/default/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/registry/default/ui/card"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/registry/default/ui/collapsible"
 import { Input } from "@/registry/default/ui/input"
 import {
   Select,
@@ -28,17 +42,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
-import { Button } from "@/registry/default/ui/button"
-import { Plus } from "lucide-react"
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
-import { ChevronsUpDown, X } from "lucide-react"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/registry/default/ui/collapsible"
-// import SiteNFooter from "@/components/product"
-import MyComponent from "@/components/product"
+import { buttonVariants } from "@/registry/new-york/ui/button"
+import MailPage from "@/app/(app)/examples/mail/page"
 
 // translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
 //   console.log(res.text);
@@ -47,18 +52,22 @@ import MyComponent from "@/components/product"
 // });
 
 export default function IndexPage() {
-
   return (
     <div className="container relative">
       <PageHeader>
         <PageHeaderHeading>Project for Mostafa.</PageHeaderHeading>
         <PageHeaderDescription>
-          {/* Translation Management for Seyaha Website. */}
-          I am offering a comprehensive solution for your e-commerce business with a Translation Management System (TMS).
-          This system will be capable of translating various aspects of your product listings into over 25 languages, thereby expanding your global reach and accessibility.
+          {/* Translation Management for Seyaha Website. */}I am offering a
+          comprehensive solution for your e-commerce business with a Translation
+          Management System (TMS). This system will be capable of translating
+          various aspects of your product listings into over 25 languages,
+          thereby expanding your global reach and accessibility.
         </PageHeaderDescription>
         <PageActions>
-          <Link href="https://www.upwork.com/freelancers/~01b52af7a84ded5239" className={cn(buttonVariants())}>
+          <Link
+            href="https://www.upwork.com/freelancers/~01b52af7a84ded5239"
+            className={cn(buttonVariants())}
+          >
             Upwork
           </Link>
           <Link
@@ -73,8 +82,8 @@ export default function IndexPage() {
         </PageActions>
       </PageHeader>
 
-      <div className="w-full h-[100vh] rounded-md flex flex-col items-start justify-start px-5 space-y-5">
-        <div className="w-full flex flex-row items-start justify-start space-x-2">
+      <div className="flex h-[100vh] w-full flex-col items-start justify-start space-y-5 rounded-md px-5">
+        <div className="flex w-full flex-row items-start justify-start space-x-2">
           <Input className="w-full" placeholder="Search your products..." />
           <Select>
             <SelectTrigger className="w-[200px]">
@@ -99,7 +108,6 @@ export default function IndexPage() {
           </Button>
         </div>
         <MyComponent />
-
       </div>
     </div>
   )
