@@ -87,3 +87,5 @@
 
 
       {/* <MyComponent /> */}
+        // const [isOpen, setIsOpen] = React.useState(false);
+                {/* <Image src={`/${imageSrc[imageIndex]}`} alt={product.data.en.title} fill={true} className="rounded-md object-cover" /> */}

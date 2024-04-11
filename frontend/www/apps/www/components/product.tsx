@@ -1,6 +1,5 @@
 "use client"
 
-import React from "react";
 import { Button } from "@/registry/default/ui/button"
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
 import { ChevronsUpDown, Ellipsis, Pencil, Trash2, X } from "lucide-react"
@@ -31,7 +30,7 @@ import { Input } from "@/registry/default/ui/input"
 import { Textarea } from "@/registry/default/ui/textarea"
 import axios from 'axios'
 import useSWR from 'swr';
-
+import React, { useState, useEffect } from 'react';
 
 interface Product {
   title: string;
@@ -142,11 +141,11 @@ export function productAction() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
-        <Textarea id="description" placeholder="Description"/>
+        <Textarea id="description" placeholder="Description" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="requirements">Requirements</Label>
-        <Textarea id="requirements" placeholder="Requirements"/>
+        <Textarea id="requirements" placeholder="Requirements" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="variant">Variant</Label>
@@ -158,11 +157,11 @@ export function productAction() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="guidance">Guidance</Label>
-        <Textarea id="guidance" placeholder="Guidance"/>
+        <Textarea id="guidance" placeholder="Guidance" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="exclusions">Exclusions</Label>
-        <Textarea id="exclusions" placeholder="Exclusions"/>
+        <Textarea id="exclusions" placeholder="Exclusions" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="path">Path</Label>
@@ -179,31 +178,91 @@ export function productAction() {
     </div>
   )
 }
-// export function MyComponent() {
-//   const { data, error } = useSWR("api/getAllData", fetcher);
 
-//   if (error) return <div>Failed to load data: {error.message}</div>;
-//   if (!data) return <div>Loading...</div>;
+export function MyComponent() {
+  // const [data, setData] = useState(null); // Initial state: no data loaded
+  // const [error, setError] = useState(null); // Initial state: no error
 
-//   return (
-//     <div>
-//       <code>{JSON.stringify(data)}</code>
-//       {data.map((item: any,index: any) => {
-//         <div key={index} className="flex items-start justify-start space-y-3 flex-row">
-//           <span>{item.title}</span>
-//           <span>{item.description}</span>
-//           <span>{item.variant}</span>
-//           <span>{item.price}</span>
-//           <span>{item.guidance}</span>
-//           <span>{item.requirements}</span>
-//           <span>{item.interests}</span>
-//           <span>{item.path}</span>
-//           <span>{item.transportation}</span>
-//         </div>
-//       })}
-//     </div>
-//   );
-// }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("api/getAllData"); // Replace with your actual endpoint
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to fetch data: ${response.statusText}`);
+  //       }
+  //       const jsonData = await response.json();
+  //       setData(jsonData);
+  //     } catch (error:any) {
+  //       setError(error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []); // Empty dependency array: fetch data only once on component mount
+
+  // if (error) {
+  //   return <div>Failed to load data: {error}</div>;
+  // }
+
+  // if (!data) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // const renderData = data.map((item: { data: { en: {}; }; _id: React.Key | null | undefined; }) => {
+  //   const { title, description } = item.data?.en || {}; // Safe nullish coalescing for 'en' property
+
+  //   return (
+  //     <div key={item._id}>
+  //       <h1>{title}</h1>
+  //       <p>{description}</p>
+  //     </div>
+  //   );
+  // });
+
+  // return (
+  //   <div>
+  //     {renderData}
+  //   </div>
+  const { data, error } = useSWR("api/getAllData", fetcher);
+
+  if (error) return <div>Failed to load data: {error.message}</div>;
+  if (!data) return <div>Loading...</div>;
+
+  const renderData = data.map((item: { data: { en: { title: any; description: any; }; }; _id: React.Key | null | undefined; }) => {
+    const { title, description } = item.data?.en || {};;
+
+    return (
+      <div key={item._id}>
+        {/* <h1>{!item ? title: "title"}</h1> */}
+        <h1>{title}</h1>
+        <h1>Hello</h1>
+      </div>
+    );
+  });
+
+
+  return (
+    <div>
+      {/* <code>{JSON.stringify(data)}</code> */}
+      {renderData}
+
+      {/* {data.map((item: any,index: any) => {
+        <div key={index} className="flex items-start justify-start space-y-3 flex-row">
+          <span>{item.title}</span>
+          <span>{item.description}</span>
+          <span>{item.variant}</span>
+          <span>{item.price}</span>
+          <span>{item.guidance}</span>
+          <span>{item.requirements}</span>
+          <span>{item.interests}</span>
+          <span>{item.path}</span>
+          <span>{item.transportation}</span>
+        </div>
+      })} */}
+    </div>
+  );
+}
+
 export default function SiteNFooter() {
 
   const { data, error } = useSWR("api/getAllData", fetcher);
@@ -213,11 +272,11 @@ export default function SiteNFooter() {
 
   return (
     <div className="flex items-start justify-start space-x-3 flex-row">
-      {data.map((item: any,index: any) => {
+      {data}
+      {/* {data.map((item: any,index: any) => {
 
         const product: any = data[index];
         const imageIndex = Object.keys(data).indexOf(index);
-        // const [isOpen, setIsOpen] = React.useState(false);
 
         return (
           <Card key={index} className="flex-1 h-auto ">
@@ -269,9 +328,8 @@ export default function SiteNFooter() {
               </nav>
               <AspectRatio ratio={16 / 9}>
                 <Image src="/eid.jpg" alt="hi" fill={true} className="rounded-md object-cover" />
-                {/* <Image src={`/${imageSrc[imageIndex]}`} alt={product.data.en.title} fill={true} className="rounded-md object-cover" /> */}
               </AspectRatio>
-              <CardTitle>op</CardTitle>
+              <CardTitle>{item}</CardTitle>
               <CardDescription>op</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -279,7 +337,7 @@ export default function SiteNFooter() {
             </CardContent>
           </Card>
         )
-      })}
+      })} */}
     </div>
   )
 }
