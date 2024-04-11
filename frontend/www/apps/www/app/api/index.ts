@@ -19,13 +19,13 @@ interface Language {
 }
 
 let title: string = "Eid Mubarak";
-let description: string = "A joyous Islamic holiday celebrating the end of Ramadan (Eid al-Fitr) or honoring Abraham's sacrifice (Eid al-Adha).";
+let description: string = "A joyous Islamic holiday celebrating the end of Ramadan Eid al-Fitr or honoring Abraham's sacrifice Eid al-Adha.";
 let variation: string = "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)";
 let price: string = "free!"; 
 let exclusions: string = "free!";
-let interests: any = ["Celebration", "Religion", "Community", "Family", "Food"];
+let interests: any = "Celebration";
 let transportation: string = "Varies depending on location, but may involve visiting mosques or family gatherings.";
-let guidance: string = "Greetings: 'Eid Mubarak' | Traditional clothing encouraged | Gift-giving (optional)";
+let guidance: string = "Greetings: Eid Mubarak | Traditional clothing encouraged | Gift-giving (optional)";
 let path: string = "as you wish!";
 let requirements: string = "Varies depending on location and traditions, but may involve attending prayers or family gatherings.";
 
@@ -154,12 +154,7 @@ async function run() {
 
       }
 
-    // const dataResult = await Content.find({});
-    // console.log(dataResult);
-
     const desiredLanguages: string[] = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh-cn"];
 
     translateAndSaveContent (desiredLanguages);
 }
-
-// export default Content;
