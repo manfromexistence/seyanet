@@ -13,42 +13,42 @@ let path: string = "Khulna - Sundarbans National Forest - Khulna";
 let requirements: string = "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing.m,/";
 
 export interface LanguageSchema {
-  code?: string;
-  title: string;
-  description: string;
-  variation: string;
-  price: string;
-  exclusions: string;
-  interests: string;
-  transportation: string;
-  guidance: string;
-  path: string;
-  requirements: string;
+    code?: string;
+    title: string;
+    description: string;
+    variation: string;
+    price: string;
+    exclusions: string;
+    interests: string;
+    transportation: string;
+    guidance: string;
+    path: string;
+    requirements: string;
 }
 
 export const languageSchema: Schema<LanguageSchema> = new Schema({
-  code: {
-    type: String,
-    minlength: 2,
-    maxlength: 2,
-  },
-  title: {type: String, require: true},
-  description: {type: String, require: true},
-  variation: {type: String, require: true},
-  price: {type: String, require: true},
-  exclusions: {type: String, require: true},
-  interests: {type: String, require: true},
-  transportation: {type: String, require: true},
-  guidance: {type: String, require: true},
-  path: {type: String, require: true},
-  requirements: {type: String, require: true},
+    code: {
+        type: String,
+        minlength: 2,
+        maxlength: 2,
+    },
+    title: { type: String, require: true },
+    description: { type: String, require: true },
+    variation: { type: String, require: true },
+    price: { type: String, require: true },
+    exclusions: { type: String, require: true },
+    interests: { type: String, require: true },
+    transportation: { type: String, require: true },
+    guidance: { type: String, require: true },
+    path: { type: String, require: true },
+    requirements: { type: String, require: true },
 });
 
-const contentSchema: Schema<{ data: Map<string, LanguageSchema> }> = new Schema({
-  data: {
-    type: Map,
-    of: languageSchema,
-  },
+const contentSchema: Schema<{ translations: Map<string, LanguageSchema> }> = new Schema({
+    translations: {
+        type: Map,
+        of: languageSchema,
+    },
 });
 
 const Content = model('content', contentSchema);
@@ -57,55 +57,56 @@ run().catch(err => console.log(err));
 
 async function run() {
 
-  await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
+    await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
 
-  async function translateAndSaveContent(languages: string[]) {
-    const translations: { [key: string]: LanguageSchema } = {};
-    for (const lang of languages) {
-      try {
-        const translatedTitle = await translate(title, { to: lang });
-        const translatedDescription = await translate(description, { to: lang });
-        const translatedVariation = await translate(variation, { to: lang });
-        const translatedPrice = await translate(price, { to: lang });
-        const translatedExclusions = await translate(exclusions, { to: lang });
-        const translatedInterests = await translate(interests, { to: lang });
-        const translatedTransportation = await translate(transportation, { to: lang });
-        const translatedGuidance = await translate(guidance, { to: lang });
-        const translatePath = await translate(path, { to: lang });
-        const translateRequirements = await translate(requirements, { to: lang });
+    //   async function translateAndSaveContent(languages: string[]) {
+    //     const translations: { [key: string]: LanguageSchema } = {};
+    //     for (const lang of languages) {
+    //       try {
+    //         const translatedTitle = await translate(title, { to: lang });
+    //         const translatedDescription = await translate(description, { to: lang });
+    //         const translatedVariation = await translate(variation, { to: lang });
+    //         const translatedPrice = await translate(price, { to: lang });
+    //         const translatedExclusions = await translate(exclusions, { to: lang });
+    //         const translatedInterests = await translate(interests, { to: lang });
+    //         const translatedTransportation = await translate(transportation, { to: lang });
+    //         const translatedGuidance = await translate(guidance, { to: lang });
+    //         const translatePath = await translate(path, { to: lang });
+    //         const translateRequirements = await translate(requirements, { to: lang });
 
-        translations[lang] = {
-            title: translatedTitle.text,
-            description: translatedDescription.text,
-            variation: translatedVariation.text,
-            price: translatedPrice.text,
-            exclusions: translatedExclusions.text,
-            interests: translatedInterests.text,
-            transportation: translatedTransportation.text,
-            guidance: translatedGuidance.text,
-            path: translatePath.text,
-            requirements: translateRequirements.text,
-        };
-      } catch (err) {
-        console.error(`Error translating to ${lang}: ${err}`);
-      }
-    }
-  
+    //         translations[lang] = {
+    //             title: translatedTitle.text,
+    //             description: translatedDescription.text,
+    //             variation: translatedVariation.text,
+    //             price: translatedPrice.text,
+    //             exclusions: translatedExclusions.text,
+    //             interests: translatedInterests.text,
+    //             transportation: translatedTransportation.text,
+    //             guidance: translatedGuidance.text,
+    //             path: translatePath.text,
+    //             requirements: translateRequirements.text,
+    //         };
+    //       } catch (err) {
+    //         console.error(`Error translating to ${lang}: ${err}`);
+    //       }
+    //     }
+
+    //     const dataResult = await Content.find({});
+    //     console.log(dataResult);
+
+    //     const newContent = new Content({ data: translations });
+    //     await newContent.save()
+    //       .then(() => console.log("Content saved successfully"))
+    //       .catch((err) => console.error("Error saving content:", err));
+
+    //   }
+
     const dataResult = await Content.find({});
     console.log(dataResult);
 
-    const newContent = new Content({ data: translations });
-    await newContent.save()
-      .then(() => console.log("Content saved successfully"))
-      .catch((err) => console.error("Error saving content:", err));
+    const desiredLanguages: string[] = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh-cn"];
 
-  }
-  
-  const desiredLanguages: string[] = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh-cn"];
-  
-  translateAndSaveContent(desiredLanguages);
-
-
+    // translateAndSaveContent (desiredLanguages);
 }
 
 export default Content;
