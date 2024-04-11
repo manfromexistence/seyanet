@@ -137,7 +137,7 @@ function MyComponent() {
   return (
     <div>
       {data.map((language: { variation: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
-        <div key={language.variation}>
+        <div key={language.index}>
           <h2>{language.title}</h2>
           <p>{language.description}</p>
         </div>
