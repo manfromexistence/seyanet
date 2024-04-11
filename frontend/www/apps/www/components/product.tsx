@@ -26,6 +26,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/registry/new-york/ui/dropdown-menu"
+import useSWR from 'swr';
+// import Content from '@/app/api/model';
+import axios from 'axios'
+
 
 interface Product {
   title: string;
@@ -112,7 +116,7 @@ const desiredLanguages: Language[] = [
   { code: "zh", name: "Chinese" },
 ];
 
-import useSWR from 'swr';
+// import useSWR from 'swr';
 
 interface ContentResponse {
   map: any;
@@ -120,31 +124,63 @@ interface ContentResponse {
   error?: Error;
 }
 
-const fetcher = async (): Promise<ContentResponse> => {
-  const response = await fetch('/api/getAllData');
-  if (!response.ok) {
-    throw new Error('Error fetching data');
-  }
-  return await response.json();
+// const fetcher = async (): Promise<ContentResponse> => {
+//   const response = await fetch('/api/getAllData');
+//   if (!response.ok) {
+//     throw new Error('Error fetching data');
+//   }
+//   return await response.json();
+// };
+
+// function MyComponent() {
+//   const { data, error } = useSWR<ContentResponse>('/api/getAllData', fetcher);
+
+//   if (error) return <div>Error fetching data</div>;
+//   if (!data) return <div>Loading...</div>;
+
+//   return (
+//     <div>
+//       {data.map((language: { variation: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
+//         <div key={language.variation}>
+//           <h2>{language.title}</h2>
+//           <p>{language.description}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+const fetcher = async (url: string) => {
+  const response = await axios.get(url);
+  return response.data;
 };
 
-function MyComponent() {
-  const { data, error } = useSWR<ContentResponse>('/api/getAllData', fetcher);
+export function MyComponent() {
+  const { data, error } = useSWR("api/getAllData", fetcher);
 
-  if (error) return <div>Error fetching data</div>;
-  if (!data) return <div>Loading...</div>;
+  // if (error) return <div>Failed to load content: {error.message}</div>;
+  // if (!data) return <div>Loading...</div>;
+
+  // // Access your fetched document data in `data`
+  // const { en, data: contentData } = data; // Extract specific fields or all data
+  // // Use contentData for rendering or further processing
 
   return (
     <div>
-      {data.map((language: { variation: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
-        <div key={language.variation}>
-          <h2>{language.title}</h2>
-          <p>{language.description}</p>
-        </div>
-      ))}
+      {/* <h1>{en.title}</h1> */}
+      {/* <p>{contentData.ar.description}</p> */}
+      <code>{JSON.stringify(data)}</code>
     </div>
   );
 }
+
+// const fetcher = async (url: RequestInfo | URL) => {
+//   const response = await fetch(url);
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch content');
+//   }
+//   return await response.json();
+// };
 
 
 
@@ -158,9 +194,9 @@ export default function SiteNFooter() {
         const [isOpen, setIsOpen] = React.useState(false);
 
         return (
-          <Card key={productId} className="lg:w-[448px] h-auto ">
+          <Card key={productId} className="flex-1 h-auto ">
             <CardHeader className="pb-4 space-y-3">
-              <nav className="w-full h-auto mb-0 flex items-center justify-between">
+              <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
                 <Select>
                   <SelectTrigger className="w-[175px]">
                     <SelectValue placeholder="Default(English)" />
@@ -210,7 +246,7 @@ export default function SiteNFooter() {
               <Collapsible
                 open={isOpen}
                 onOpenChange={setIsOpen}
-                className="w-[350px] space-y-2"
+                className="w-full space-y-2"
               >
                 <div className="flex items-center justify-between space-x-4 px-4">
                   <h4 className="text-sm font-semibold">
@@ -251,8 +287,7 @@ export default function SiteNFooter() {
           </Card>
         )
       })}
-
-      <MyComponent />
+      {/* <MyComponent /> */}
     </div>
   )
 }

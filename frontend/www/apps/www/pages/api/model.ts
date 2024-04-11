@@ -15,7 +15,7 @@ export interface LanguageSchema {
 }
 
 export const languageSchema: Schema<LanguageSchema> = new Schema({
-imageUrl: { type: String },
+    imageUrl: { type: String },
     title: { type: String, require: true },
     description: { type: String, require: true },
     variation: { type: String, require: true },
