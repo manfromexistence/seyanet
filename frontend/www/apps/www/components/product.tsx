@@ -238,7 +238,7 @@ export function productAction() {
 export default function SiteNFooter() {
 
   const { data, error } = useSWR("api/getAllData", fetcher);
-  const [language, setLanguage] = useState("bn");
+  const [language, setLanguage] = useState("en");
   const [isOpen, setIsOpen] = useState(false);
 
   if (error) return <div>Failed to load data: {error.message}</div>;
@@ -247,13 +247,13 @@ export default function SiteNFooter() {
   return (
     <div className="flex items-start justify-start space-x-3 flex-row">
       {data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }, index: number) => {
-        const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.language || {};
+        const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.[language] || {};
 
         return (
           <Card key={item._id} className="flex-1 h-auto ">
             <CardHeader className="pb-4 space-y-3">
               <nav className="w-full h-min min-lg:h-[565px] mb-0 flex items-center justify-between">
-                <Select>
+                <Select value={language}>
                   <SelectTrigger className="w-[175px]">
                     <SelectValue placeholder="Default(English)" />
                   </SelectTrigger>
@@ -261,8 +261,8 @@ export default function SiteNFooter() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Languages</SelectLabel>
-                      {desiredLanguages.map((language, index) => (
-                        <SelectItem onClick={() => setLanguage(language.code)} key={index} value={language.code}>{language.name}</SelectItem>
+                      {desiredLanguages.map((languageItem, index) => (
+                        <SelectItem onClick={() => setLanguage(languageItem.code)} key={index} value={languageItem.code}>{languageItem.name}</SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
