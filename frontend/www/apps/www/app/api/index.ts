@@ -106,6 +106,8 @@ const contentSchema: Schema<{ translations: Map<string, LanguageSchema> }> = new
 
 const Content = model('content', contentSchema);
 
+run().catch(err => console.log(err));
+
 async function run() {
 
     await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
@@ -143,7 +145,7 @@ async function run() {
         }
 
         const dataResult = await Content.find({});
-        console.log(dataResult);
+        console.log(`all translations=${translations} and all dataResult=${dataResult}`);
 
         const newContent = new Content({ data: translations });
         await newContent.save()
@@ -152,14 +154,12 @@ async function run() {
 
       }
 
-    const dataResult = await Content.find({});
-    console.log(dataResult);
+    // const dataResult = await Content.find({});
+    // console.log(dataResult);
 
     const desiredLanguages: string[] = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh-cn"];
 
     translateAndSaveContent (desiredLanguages);
 }
-
-run()
 
 // export default Content;
