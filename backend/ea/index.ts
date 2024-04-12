@@ -23,7 +23,7 @@ app.get('/', () => 'Welcome to our API')
 app.use(productRoutes)
 
 // Start the server
-app.listen(Bun.env.PORT || 9000)
+app.listen(9000)
 
 console.log(
   `🚀 Server is running at ${app.server?.hostname}:${app.server?.port}`
