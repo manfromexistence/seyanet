@@ -1,20 +1,14 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import Image from "next/image"
-import axios from "axios"
-import { ChevronsUpDown, Ellipsis, Pencil, Trash2, X } from "lucide-react"
-import useSWR from "swr"
-
-import { AspectRatio } from "@/registry/default/ui/aspect-ratio"
 import { Button } from "@/registry/default/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/registry/default/ui/card"
+import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/registry/default/ui/card"
+import { ChevronsUp, ChevronsUpDown, Ellipsis, Pencil, Plus, Trash2, X } from "lucide-react"
+import { AspectRatio } from "@/registry/default/ui/aspect-ratio";
+import { Input } from "@/registry/default/ui/input"
+import axios from 'axios'
+import useSWR from 'swr';
+import React, { useState, useEffect } from 'react';
+import Image from "next/image"
 import {
   Collapsible,
   CollapsibleContent,
@@ -31,15 +25,31 @@ import {
 import { Input } from "@/registry/default/ui/input"
 import { Label } from "@/registry/default/ui/label"
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/registry/default/ui/select"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/registry/default/ui/dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/registry/default/ui/dropdown-menu"
+import { Label } from "@/registry/default/ui/label"
 import { Textarea } from "@/registry/default/ui/textarea"
+import { ScrollArea } from "@/registry/default/ui/scroll-area"
 
 interface Product {
   title: string
@@ -58,48 +68,21 @@ interface Language {
   name: string
 }
 interface ContentResponse {
-  map: any
-  data: any[]
-  error?: Error
+  map: any;
+  data: any[];
+  error?: Error;
 }
-// const products: { [key: string]: Product } = {
-//   eidMubarakData: {
-//     "title": "Eid Mubarak",
-//     "description": "A joyous Islamic holiday celebrating the end of Ramadan (Eid al-Fitr) or honoring Abraham's sacrifice (Eid al-Adha).",
-//     "variation": "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)",
-//     "price": "free!",
-//     "exclusions": "free!",
-//     "interests": ["Celebration", "Religion", "Community", "Family", "Food"],
-//     "transportation": "Varies depending on location, but may involve visiting mosques or family gatherings.",
-//     "guidance": "Greetings: 'Eid Mubarak'  | Traditional clothing encouraged  | Gift-giving (optional)",
-//     "path": "as you wish!",
-//     "requirements": "Varies depending on location and traditions, but may involve attending prayers or family gatherings."
-//   },
-//   kabah: {
-//     "title": "Journey to Hajj: A pilgrimage to Kabah",
-//     "description": "Hajj is a holy pilgrimage for Muslims to the holiest city of Islam, Mecca, Saudi Arabia. It's a mandatory pilgrimage for those who are physically and financially able.",
-//     "variation": "One mounth",
-//     "price": "Varies depending on travel arrangements, accommodation, and services.",
-//     "exclusions": "Price may not include visa fees, personal expenses, and sacrificial animal (if applicable).",
-//     "interests": ["Religion", "Pilgrimage", "Islam", "Cultural immersion"],
-//     "transportation": "Varies depending on origin. Options include flights, buses, or joining organized Hajj groups with transportation included.",
-//     "guidance": "Requires a valid Hajj visa.  |  Strict adherence to Hajj rituals.  |  Recommended to travel with a knowledgeable guide.",
-//     "path": "Varies depending on origin, but ultimately leads to Mecca, Saudi Arabia.",
-//     "requirements": "Physical and financial ability.  |  For some nationalities, a Hajj quota system may apply."
-//   },
-//   madian: {
-//     "title": "Journey to Madina",
-//     "description": "Embark on a spiritual pilgrimage to Madina, the second holiest city in Islam. Explore the Prophet's Mosque (Masjid النبوي) and other historical sites, experience the vibrant Islamic culture, and deepen your faith.",
-//     "variation": "Individual travel or Guided tour (Umrah packages available)",
-//     "price": "Varies depending on travel time, origin, accommodation, and inclusions. Expect a range of \$2,000 - \$10,000+.",
-//     "exclusions": "Typically excludes international flights, meals beyond breakfast at some hotels, personal expenses, and Saudi Arabia visa fees.",
-//     "interests": ["Religion", "Pilgrimage", "History", "Culture", "Architecture"],
-//     "transportation": "Varies depending on your origin. Options include flights (consider nearby airports like Jeddah or Medina), buses (potentially long journeys depending on origin), or car travel (requires proper permits for international travel by car).",
-//     "guidance": "Consult a trusted travel agency specializing in Islamic pilgrimages. Visa and vaccination requirements may apply (check with Saudi Arabian authorities). Consider travel insurance and appropriate Islamic attire for religious sites. Learn basic Arabic phrases for a more enriching experience.",
-//     "path": "Varies depending on origin. Common routes involve flights to Jeddah or Medina airports, followed by ground transportation to Madina.",
-//     "requirements": "Physical fitness for religious activities (walking, standing for prayers).  Appropriate clothing for Islamic sites (modest clothing that covers shoulders and knees for both men and women). Valid visa for Saudi Arabia (apply well in advance). Umrah pilgrimage may require additional permits depending on nationality."
-//   }
-// };
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
+interface Products {
+  _id?: string;
+  __v: any;
+  data: Product;
+}
 
 const desiredLanguages: Language[] = [
   { code: "ar", name: "Arabic" },
@@ -127,12 +110,16 @@ const desiredLanguages: Language[] = [
   { code: "zh", name: "Chinese" },
 ]
 
-let imageSrc: string[] = ["eid.jpg", "kabah.jpg", "madina.jpg"]
+let imageSrc: string[] = [
+  "eid.jpg",
+  "kabah.jpg",
+  "madina.jpg"
+]
 
 const fetcher = async (url: string) => {
-  const response = await axios.get(url)
-  return response.data
-}
+  const response = await axios.get(url);
+  return response.data;
+};
 
 export function productAction() {
   return (
@@ -181,155 +168,14 @@ export function productAction() {
   )
 }
 
-// export function collapsibleCustomize() {
-//   return (
-
-//   )
-// }
-
-// export function productCard() {
-
-// const { data, error } = useSWR("api/getAllData", fetcher);
-
-// if (error) return <div>Failed to load data: {error.message}</div>;
-// if (!data) return <div>Loading...</div>;
-
-// const renderData = data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }) => {
-//   const { title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions } = item.data?.bn || {};;
-
-//   return (
-//     <div key={item._id}>
-//       <span>{title}</span>
-//       <span>{description}</span>
-//       <span>{variation}</span>
-//       <span>{price}</span>
-//       <span>{guidance}</span>
-//       <span>{requirements}</span>
-//       <span>{interests}</span>
-//       <span>{path}</span>
-//       <span>{transportation}</span>
-//     </div>
-//   );
-// });
-
-//   // return (
-//   //   <div>
-//   //     {/* <code>{JSON.stringify(data)}</code> */}
-//   //     {renderData}
-
-//   //     {/* {data.map((item: any,index: any) => {
-//   //       <div key={index} className="flex items-start justify-start space-y-3 flex-row">
-//   //         <span>{item.title}</span>
-//   //         <span>{item.description}</span>
-//   //         <span>{item.variant}</span>
-//   //         <span>{item.price}</span>
-//   //         <span>{item.guidance}</span>
-//   //         <span>{item.requirements}</span>
-//   //         <span>{item.interests}</span>
-//   //         <span>{item.path}</span>
-//   //         <span>{item.transportation}</span>
-//   //       </div>
-//   //     })} */}
-//   //   </div>
-//   // );
-// }
-// export const productCard = ({ title, description, variation, price, guidance, requirements, interests, path, transportation, exclusions }: Product) => (
-//   <div>
-//     <h3>{title}</h3>
-//     <p>{description}</p>
-//   </div>
-// );
-
-// export default function SiteNFooter() {
-
-//   const { data, error } = useSWR("api/getAllData", fetcher);
-
-//   if (error) return <div>Failed to load data: {error.message}</div>;
-//   if (!data) return <div>Loading...</div>;
-
-//   return (
-//     <div className="flex items-start justify-start space-x-3 flex-row">
-//       {data.map((item: { data: { [key: string]: Product }; _id: React.Key | null | undefined; }, index: number) => (
-//         <productCard key={index} {...item.data} />
-//       ))}
-//     </div>
-//   )
-// }
-// export const productCard = ({
-//   title,
-//   description,
-//   variation,
-//   price,
-//   guidance,
-//   requirements,
-//   interests,
-//   path,
-//   transportation,
-//   exclusions,
-// }) => (
-//   <div>
-//     <h3>{title}</h3>
-//     <p>{description}</p>
-//   </div>
-// );
-
-// export const productCard = () => (
-//   <div>
-//     <h3>Title</h3>
-//     <p>Description</p>
-//   </div>
-// );
-
-// // Define the SiteNFooter component with type annotations
-// export default function SiteNFooter() {
-//   const { data, error } = useSWR<Product[]>("api/getAllData", fetcher); // UseSWR with generic type
-
-//   if (error) return <div>Failed to load data: {error.message}</div>;
-//   if (!data) return <div>Loading...</div>;
-
-//   return (
-//     <div className="flex items-start justify-start space-x-3 flex-row">
-//       {data.map((item: any, index: React.Key) => (
-//         <productCard key={index}/>
-//       ))}
-//     </div>
-//   );
-// }
-
-// Interface for JSON data structure (adapt as needed)
-interface Post {
-  userId: number
-  id: number
-  title: string
-  body: string
-}
-interface Products {
-  _id?: string
-  __v: any
-  data: Product
-}
-
-const MyComponent: React.FC = () => {
-  // const [fetchData, setFetchData] = useState<Products[]>([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('https://your-api.com/data');
-  //       const fetchedData = await response.json();
-  //       setFetchData(fetchedData);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-  const { data, error } = useSWR("api/getAllData", fetcher)
+const TourismOffer: React.FC = () => {
+  const { data, error } = useSWR("api/getAllData", fetcher);
 
   if (error) return <div>Failed to load data: {error.message}</div>
   if (!data) return <div>Loading...</div>
 
   return (
+    <div className="flex flex-row items-start justify-start space-x-3">
     <div className="flex flex-row items-start justify-start space-x-3">
       {data.map((item: Products, index: number) => (
         <ProductDetails
@@ -340,8 +186,88 @@ const MyComponent: React.FC = () => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
+export const CreateTourismOffer: React.FC = () => {
+  const [ title, setTitle ] = useState("");
+  const [ description, setDescription ] = useState("");
+  const [ requirements, setRequirements ] = useState("");
+  const [ variant, setVariant ] = useState("");
+  const [ price, setPrice ] = useState("");
+  const [ guidance, setGuidance ] = useState("");
+  const [ exclusions, setExclusions ] = useState("");
+  const [ path, setPath ] = useState("");
+  const [ transportation, setTransportation ] = useState("");
+  const [ interests, setInterests ] = useState("");
+
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          <Plus className="h-5 w-5" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="h-[55vh] w-[80%] min-w-[500px] sm:max-w-[425px]">
+        <DialogHeader className="border-b px-2 py-3">
+          <DialogTitle>Create a Tourism Offer</DialogTitle>
+          <DialogDescription>
+            {/* Make a tourism offer here. Click create when you are done. */}
+            you inputed {title}+{description}+{requirements}+{variant}+{price}+{guidance}+{exclusions}+{path}+{transportation}+{interests}!
+          </DialogDescription>
+        </DialogHeader>
+        <ScrollArea className="h-full w-full">
+          <div className="mb-5 w-full space-y-2 px-3.5">
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Title" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea onChange={(e) => setDescription(e.target.value)} id="description" placeholder="Description" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="requirements">Requirements</Label>
+              <Textarea onChange={(e) => setRequirements(e.target.value)} id="requirements" placeholder="Requirements" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="variant">Variant</Label>
+              <Input onChange={(e) => setVariant(e.target.value)} id="variant" placeholder="Variant" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="price">Price</Label>
+              <Input onChange={(e) => setPrice(e.target.value)} id="price" placeholder="Price" type="number" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="guidance">Guidance</Label>
+              <Textarea onChange={(e) => setGuidance(e.target.value)} id="guidance" placeholder="Guidance" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="exclusions">Exclusions</Label>
+              <Textarea onChange={(e) => setExclusions(e.target.value)} id="exclusions" placeholder="Exclusions" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="path">Path</Label>
+              <Input onChange={(e) => setPath(e.target.value)} id="path" placeholder="Path" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="transportation">Transportation</Label>
+              <Input onChange={(e) => setTransportation(e.target.value)} id="transportation" placeholder="Transportation" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="interests">Interests</Label>
+              <Input onChange={(e) => setInterests(e.target.value)} id="interests" placeholder="Interests" />
+            </div>
+          </div>
+        </ScrollArea>
+        <DialogFooter className="relative flex w-full flex-col-reverse items-center px-2 sm:flex-row sm:justify-between sm:space-x-2">
+          <span className="text-muted-foreground text-center text-sm">Scroll down to see more options!</span>
+          <Button type="submit">Create</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
   dataObj,
@@ -351,17 +277,17 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
   const [language, setLanguage] = useState("en")
   const [isOpen, setIsOpen] = useState(false)
 
-  const [currentData, setCurrentData] = useState<any>({}) // Store data for current language
+  const [currentData, setCurrentData] = useState<any>({});
   function getLanguageName(code: string): string | undefined {
-    const language = desiredLanguages.find((lang) => lang.code === code)
-    return language?.name // Use optional chaining for potential undefined language
+    const language = desiredLanguages.find((lang) => lang.code === code);
+    return language?.name;
   }
 
-  // Fetch data on component mount (replace with your actual data fetching logic)
+
   useEffect(() => {
-    const fetchedData = dataObj || {} // Use dataObj directly if already fetched
-    setCurrentData(fetchedData[language] || {})
-  }, [language, dataObj]) // Re-run when language or dataObj changes
+    const fetchedData = dataObj || {};
+    setCurrentData(fetchedData[language] || {});
+  }, [language, dataObj]);
 
   const handleLanguageChange = (newLanguage: string) => {
     if (desiredLanguages.find((lang) => lang.code === newLanguage)) {
@@ -388,36 +314,36 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
     <Card className="h-auto flex-1">
       <CardHeader className="space-y-3 pb-4">
         <nav className="min-lg:h-[565px] mb-0 flex h-min w-full items-center justify-between">
+    <Card className="h-auto flex-1">
+      <CardHeader className="space-y-3 pb-4">
+        <nav className="min-lg:h-[565px] mb-0 flex h-min w-full items-center justify-between">
           <DropdownMenu>
-            <DropdownMenuTrigger>
-              <span className="hover:bg[hsl(var(--primary))] rounded-md border p-3 text-sm">
+            <DropdownMenuTrigger className="hover:bg[hsl(var(--primary))] flex items-center justify-center space-x-2 rounded-md border px-5 py-3 text-sm">
+              <span>
                 Selected ({getLanguageName(language)})
               </span>
+              <ChevronsUp className="h-4 w-4" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>
-                Browse contents in your desired language
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-
-              {desiredLanguages.map((language, index) => (
-                <DropdownMenuItem
-                  onClick={() => handleLanguageChange(language.code)}
-                  key={index}
-                >
-                  {language.name}
-                </DropdownMenuItem>
-              ))}
+            <DropdownMenuContent className="border-0 p-0">
+              <ScrollArea className="h-72 w-48 rounded-md border">
+                {desiredLanguages.map((language, index) => (
+                  <DropdownMenuItem key={index} onClick={() => handleLanguageChange(language.code)} >{language.name}</DropdownMenuItem>
+                ))}
+              </ScrollArea>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <div className="actions flex h-auto w-auto items-end justify-center">
             <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
+          <div className="actions flex h-auto w-auto items-end justify-center">
+            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <Pencil className="h-3.5 w-3.5" />
             </div>
             <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
+            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <Trash2 className="h-3.5 w-3.5" />
             </div>
+            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
             <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -444,12 +370,6 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* {desiredLanguages.map((lang) => (
-          <button key={lang.code} onClick={() => handleLanguageChange(lang.code)}>
-            {lang.name}
-          </button>
-        ))} */}
-
         <Collapsible
           open={isOpen}
           onOpenChange={setIsOpen}
@@ -496,4 +416,4 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
   )
 }
 
-export default MyComponent
+export default TourismOffer;

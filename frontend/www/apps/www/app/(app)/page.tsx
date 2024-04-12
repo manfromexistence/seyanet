@@ -1,15 +1,7 @@
 // "use client"
-// import React from "react";
-import Image from "next/image"
-import Link from "next/link"
-import translate from "@iamtraction/google-translate"
-import { ChevronsUpDown, Plus, X } from "lucide-react"
 
-import { siteConfig } from "@/config/site"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { Announcement } from "@/components/announcement"
-import { CommandMenu } from "@/components/command-menu"
-import { ExamplesNav } from "@/components/examples-nav"
 import { Icons } from "@/components/icons"
 import {
   PageActions,
@@ -17,21 +9,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header"
-// import SiteNFooter from "@/components/product"
-import MyComponent from "@/components/product"
-import { Button } from "@/registry/default/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/registry/default/ui/card"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/registry/default/ui/collapsible"
+import { buttonVariants } from "@/registry/new-york/ui/button"
 import { Input } from "@/registry/default/ui/input"
 import {
   Select,
@@ -42,14 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
-import { buttonVariants } from "@/registry/new-york/ui/button"
-import MailPage from "@/app/(app)/examples/mail/page"
+import { Search } from "lucide-react"
+import TourismOffer,{CreateTourismOffer} from "@/components/product"
 
-// translate('Tu es incroyable!', { to: 'en' }).then((res: { text: any }) => {
-//   console.log(res.text);
-// }).catch((err: any) => {
-//   console.error(err);
-// });
 
 export default function IndexPage() {
   return (
@@ -57,11 +30,8 @@ export default function IndexPage() {
       <PageHeader>
         <PageHeaderHeading>Project for Mostafa.</PageHeaderHeading>
         <PageHeaderDescription>
-          {/* Translation Management for Seyaha Website. */}I am offering a
-          comprehensive solution for your e-commerce business with a Translation
-          Management System (TMS). This system will be capable of translating
-          various aspects of your product listings into over 25 languages,
-          thereby expanding your global reach and accessibility.
+          I am offering a comprehensive solution for your e-commerce business with a Translation Management System (TMS).
+          This system will be capable of translating various aspects of your product listings into over 25 languages, thereby expanding your global reach and accessibility.
         </PageHeaderDescription>
         <PageActions>
           <Link
@@ -84,7 +54,10 @@ export default function IndexPage() {
 
       <div className="flex h-[100vh] w-full flex-col items-start justify-start space-y-5 rounded-md px-5">
         <div className="flex w-full flex-row items-start justify-start space-x-2">
-          <Input className="w-full" placeholder="Search your products..." />
+          <div className="relative flex w-full flex-row items-center justify-start space-x-2 rounded-md border">
+            <Input className="w-full flex-1 border-0" placeholder="Search your products..." />
+            <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+          </div>
           <Select>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select by activity" />
@@ -103,11 +76,11 @@ export default function IndexPage() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button variant="secondary">
-            <Plus className="h-5 w-5" />
-          </Button>
+          <CreateTourismOffer />
+
         </div>
-        <MyComponent />
+        <TourismOffer />
+
       </div>
     </div>
   )
