@@ -1,6 +1,36 @@
 import { Schema, model, connect } from 'mongoose';
-import translator from "./translator-by-manfromexistence/index.js";
+import translate from "@iamtraction/google-translate"
 
+interface Product {
+  title: string
+  description: string
+  variation: string
+  price: string
+  exclusions: string
+  interests: string[]
+  transportation: string
+  guidance: string
+  path: string
+  requirements: string
+}
+export interface LanguageSchema {
+  imageUrl?: string
+  title: string
+  description: string
+  variation: string
+  price: string
+  exclusions: string
+  interests: string
+  transportation: string
+  guidance: string
+  path: string
+  requirements: string
+}
+
+interface Language {
+  code: string
+  name: string
+}
 // let title = "Eid Mubarak";
 // let description = "A joyous Islamic holiday celebrating the end of Ramadan (Eid al-Fitr) or honoring Abraham's sacrifice (Eid al-Adha).";
 // let variation = "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)";
@@ -105,21 +135,22 @@ run().catch(err => console.log(err));
 async function run() {
 
   await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
-0
-  async function translateAndSaveContent(languages) {
-    const translations = {};
+  0
+  async function translateAndSaveContent(languages: string[]) {
+    const translations: { [key: string]: LanguageSchema } = {}
+
     for (const lang of languages) {
       try {
-        const translatedTitle = await translator(title, { to: lang });
-        const translatedDescription = await translator(description, { to: lang });
-        const translatedVariation = await translator(variation, { to: lang });
-        const translatedPrice = await translator(price, { to: lang });
-        const translatedExclusions = await translator(exclusions, { to: lang });
-        const translatedInterests = await translator(interests, { to: lang });
-        const translatedTransportation = await translator(transportation, { to: lang });
-        const translatedGuidance = await translator(guidance, { to: lang });
-        const translatePath = await translator(path, { to: lang });
-        const translateRequirements = await translator(requirements, { to: lang });
+        const translatedTitle = await translate(title, { to: lang });
+        const translatedDescription = await translate(description, { to: lang });
+        const translatedVariation = await translate(variation, { to: lang });
+        const translatedPrice = await translate(price, { to: lang });
+        const translatedExclusions = await translate(exclusions, { to: lang });
+        const translatedInterests = await translate(interests, { to: lang });
+        const translatedTransportation = await translate(transportation, { to: lang });
+        const translatedGuidance = await translate(guidance, { to: lang });
+        const translatePath = await translate(path, { to: lang });
+        const translateRequirements = await translate(requirements, { to: lang });
 
         translations[lang] = {
           title: translatedTitle.text,
@@ -143,7 +174,7 @@ async function run() {
     const newContent = new Content({ data: translations });
     await newContent.save()
       .then(() => console.log("Content saved successfully"))
-      .catch((err) => console.error("Error saving content:", err));
+      .catch((err: any) => console.error("Error saving content:", err));
   }
 
   const desiredLanguages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
