@@ -151,7 +151,7 @@ export function productAction() {
 }
 
 const TourismOffer: React.FC = () => {
-  const { data, error } = useSWR("api/getAllData", fetcher);
+  const { data, error } = useSWR("https://obscure-carnival-675r7vppgjwh54g6-9000.app.github.dev/", fetcher);
 
   if (error) return <div>Failed to load data: {error.message}</div>
   if (!data) return <div>Loading...</div>

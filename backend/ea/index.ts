@@ -19,7 +19,7 @@ app.use(error())
 app.get('/', () => 'Welcome to our API')
 
 // User Routes [api/v1/users]
-app.use(userRoutes)
+// app.use(userRoutes)
 app.use(productRoutes)
 
 // Start the server
