@@ -3,6 +3,7 @@ import { Elysia } from 'elysia'
 import { userRoutes } from './routes'
 import { error, logger } from './middlewares'
 import { connectDB } from './config'
+import productRoutes from './routes/productRoutes'
 
 // Create Elysia instance
 const app = new Elysia()
@@ -19,6 +20,7 @@ app.get('/', () => 'Welcome to our API')
 
 // User Routes [api/v1/users]
 app.use(userRoutes)
+app.use(productRoutes)
 
 // Start the server
 app.listen(Bun.env.PORT || 9000)
