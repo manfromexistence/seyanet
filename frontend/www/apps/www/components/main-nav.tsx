@@ -22,10 +22,10 @@ export function MainNav() {
       </Link>
       <nav className="flex items-center gap-4 text-sm lg:gap-6">
         <Link
-          href="/docs"
+          href="/payme"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/docs" ? "text-foreground" : "text-foreground/60"
+            pathname === "/payme" ? "text-foreground" : "text-foreground/60"
           )}
         >
           Hello, please pay me only 100$ through payooner.com

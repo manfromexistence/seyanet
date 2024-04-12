@@ -19,8 +19,7 @@
   "dependencies": {
     "@faker-js/faker": "^8.2.0",
     "@hookform/resolvers": "^3.1.0",
-    <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
-
+    "@iamtraction/google-translate": "^2.0.1",
     "@radix-ui/react-accessible-icon": "^1.0.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.4",
