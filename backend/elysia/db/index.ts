@@ -130,55 +130,57 @@ const contentSchema = new Schema({
 
 const Content = model('content', contentSchema);
 
-run().catch(err => console.log(err));
+// run().catch(err => console.log(err));
 
-async function run() {
+// async function run() {
 
-  await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
-  0
-  async function translateAndSaveContent(languages: string[]) {
-    const translations: { [key: string]: LanguageSchema } = {}
+//   await connect("mongodb+srv://sumon:sumon1234@seyaha.pzour3n.mongodb.net/ProductList?retryWrites=true&w=majority&appName=seyaha");
+  
+//   async function translateAndSaveContent(languages: string[]) {
+//     const translations: { [key: string]: LanguageSchema } = {}
 
-    for (const lang of languages) {
-      try {
-        const translatedTitle = await translate(title, { to: lang });
-        const translatedDescription = await translate(description, { to: lang });
-        const translatedVariation = await translate(variation, { to: lang });
-        const translatedPrice = await translate(price, { to: lang });
-        const translatedExclusions = await translate(exclusions, { to: lang });
-        const translatedInterests = await translate(interests, { to: lang });
-        const translatedTransportation = await translate(transportation, { to: lang });
-        const translatedGuidance = await translate(guidance, { to: lang });
-        const translatePath = await translate(path, { to: lang });
-        const translateRequirements = await translate(requirements, { to: lang });
+//     for (const lang of languages) {
+//       try {
+//         const translatedTitle = await translate(title, { to: lang });
+//         const translatedDescription = await translate(description, { to: lang });
+//         const translatedVariation = await translate(variation, { to: lang });
+//         const translatedPrice = await translate(price, { to: lang });
+//         const translatedExclusions = await translate(exclusions, { to: lang });
+//         const translatedInterests = await translate(interests, { to: lang });
+//         const translatedTransportation = await translate(transportation, { to: lang });
+//         const translatedGuidance = await translate(guidance, { to: lang });
+//         const translatePath = await translate(path, { to: lang });
+//         const translateRequirements = await translate(requirements, { to: lang });
 
-        translations[lang] = {
-          title: translatedTitle.text,
-          description: translatedDescription.text,
-          variation: translatedVariation.text,
-          price: translatedPrice.text,
-          exclusions: translatedExclusions.text,
-          interests: translatedInterests.text,
-          transportation: translatedTransportation.text,
-          guidance: translatedGuidance.text,
-          path: translatePath.text,
-          requirements: translateRequirements.text,
-        };
-      } catch (err) {
-        console.error(`Error translating to ${lang}: ${err}`);
-      }
-    }
+//         translations[lang] = {
+//           title: translatedTitle.text,
+//           description: translatedDescription.text,
+//           variation: translatedVariation.text,
+//           price: translatedPrice.text,
+//           exclusions: translatedExclusions.text,
+//           interests: translatedInterests.text,
+//           transportation: translatedTransportation.text,
+//           guidance: translatedGuidance.text,
+//           path: translatePath.text,
+//           requirements: translateRequirements.text,
+//         };
+//       } catch (err) {
+//         console.error(`Error translating to ${lang}: ${err}`);
+//       }
+//     }
 
-    console.log(translations);
+//     console.log(translations);
 
-    const newContent = new Content({ data: translations });
-    await newContent.save()
-      .then(() => console.log("Content saved successfully"))
-      .catch((err: any) => console.error("Error saving content:", err));
-  }
+//     const newContent = new Content({ data: translations });
+//     await newContent.save()
+//       .then(() => console.log("Content saved successfully"))
+//       .catch((err: any) => console.error("Error saving content:", err));
+//   }
 
-  const desiredLanguages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
+//   const desiredLanguages = ["ar", "bn", "de", "en", "es", "fr", "fa", "gu", "hi", "it", "hi", "ko", "ms", "ml", "ps", "pa", "pt", "ru", "sw", "te", "ta", "tr", "ur", "zh"];
 
-  translateAndSaveContent(desiredLanguages);
+//   translateAndSaveContent(desiredLanguages);
 
-}
+// }
+
+export default Content;
