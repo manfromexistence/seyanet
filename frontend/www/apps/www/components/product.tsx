@@ -15,16 +15,6 @@ import {
   CollapsibleTrigger,
 } from "@/registry/default/ui/collapsible"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/registry/default/ui/dropdown-menu"
-import { Input } from "@/registry/default/ui/input"
-import { Label } from "@/registry/default/ui/label"
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -36,15 +26,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
 import { Label } from "@/registry/default/ui/label"
@@ -176,7 +158,6 @@ const TourismOffer: React.FC = () => {
 
   return (
     <div className="flex flex-row items-start justify-start space-x-3">
-    <div className="flex flex-row items-start justify-start space-x-3">
       {data.map((item: Products, index: number) => (
         <ProductDetails
           key={item._id}
@@ -188,17 +169,18 @@ const TourismOffer: React.FC = () => {
     </div>
   );
 };
+
 export const CreateTourismOffer: React.FC = () => {
-  const [ title, setTitle ] = useState("");
-  const [ description, setDescription ] = useState("");
-  const [ requirements, setRequirements ] = useState("");
-  const [ variant, setVariant ] = useState("");
-  const [ price, setPrice ] = useState("");
-  const [ guidance, setGuidance ] = useState("");
-  const [ exclusions, setExclusions ] = useState("");
-  const [ path, setPath ] = useState("");
-  const [ transportation, setTransportation ] = useState("");
-  const [ interests, setInterests ] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [requirements, setRequirements] = useState("");
+  const [variant, setVariant] = useState("");
+  const [price, setPrice] = useState("");
+  const [guidance, setGuidance] = useState("");
+  const [exclusions, setExclusions] = useState("");
+  const [path, setPath] = useState("");
+  const [transportation, setTransportation] = useState("");
+  const [interests, setInterests] = useState("");
 
 
   return (
@@ -314,9 +296,6 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
     <Card className="h-auto flex-1">
       <CardHeader className="space-y-3 pb-4">
         <nav className="min-lg:h-[565px] mb-0 flex h-min w-full items-center justify-between">
-    <Card className="h-auto flex-1">
-      <CardHeader className="space-y-3 pb-4">
-        <nav className="min-lg:h-[565px] mb-0 flex h-min w-full items-center justify-between">
           <DropdownMenu>
             <DropdownMenuTrigger className="hover:bg[hsl(var(--primary))] flex items-center justify-center space-x-2 rounded-md border px-5 py-3 text-sm">
               <span>
@@ -332,18 +311,13 @@ const ProductDetails: React.FC<{ dataObj: any; __v: any; index: number }> = ({
               </ScrollArea>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <div className="actions flex h-auto w-auto items-end justify-center">
-            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
-          <div className="actions flex h-auto w-auto items-end justify-center">
+          <div className="actions flex h-auto w-auto items-end justify-center space-x-1">
             <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <Pencil className="h-3.5 w-3.5" />
             </div>
             <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
-            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <Trash2 className="h-3.5 w-3.5" />
             </div>
-            <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
             <div className="flex items-center justify-center rounded-full border p-3 hover:bg-[hsl(var(--secondary))]">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
