@@ -18,16 +18,7 @@ interface Language {
   name: string
 }
 
-// let title: string = "Eid Mubarak";
-// let description: string = "A joyous Islamic holiday celebrating the end of Ramadan Eid al-Fitr or honoring Abraham's sacrifice Eid al-Adha.";
-// let variation: string = "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)";
-// let price: string = "free!";
-// let exclusions: string = "free!";
-// let interests: any = "Celebration";
-// let transportation: string = "Varies depending on location, but may involve visiting mosques or family gatherings.";
-// let guidance: string = "Greetings: Eid Mubarak | Traditional clothing encouraged | Gift-giving (optional)";
-// let path: string = "as you wish!";
-// let requirements: string = "Varies depending on location and traditions, but may involve attending prayers or family gatherings.";
+// This will be inputed by the user!
 let title = "Amazing Day Trip to Sundarbans National Forest",
   description =
     "Explore the natural wonders of the Sundarbans, the largest mangrove forest in the world, on this exciting day trip. Cruise through the lush waterways, spot diverse wildlife, and learn about the unique ecosystem.",
@@ -41,62 +32,8 @@ let title = "Amazing Day Trip to Sundarbans National Forest",
   guidance = "Experienced English-speaking guide throughout the tour",
   path = "Khulna - Sundarbans National Forest - Khulna",
   requirements =
-    "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing."
+    "Comfortable clothing and shoes suitable for walking and boating. Binoculars recommended for wildlife viewing.";
 
-const products: { [key: string]: Product } = {
-  eidMubarakData: {
-    title: "Eid Mubarak",
-    description:
-      "A joyous Islamic holiday celebrating the end of Ramadan (Eid al-Fitr) or honoring Abraham's sacrifice (Eid al-Adha).",
-    variation: "Eid al-Fitr (End of Ramadan) or Eid al-Adha (Sacrifice)",
-    price: "free!",
-    exclusions: "free!",
-    interests: ["Celebration", "Religion", "Community", "Family", "Food"],
-    transportation:
-      "Varies depending on location, but may involve visiting mosques or family gatherings.",
-    guidance:
-      "Greetings: 'Eid Mubarak'  | Traditional clothing encouraged  | Gift-giving (optional)",
-    path: "as you wish!",
-    requirements:
-      "Varies depending on location and traditions, but may involve attending prayers or family gatherings.",
-  },
-  kabah: {
-    title: "Journey to Hajj: A pilgrimage to Kabah",
-    description:
-      "Hajj is a holy pilgrimage for Muslims to the holiest city of Islam, Mecca, Saudi Arabia. It's a mandatory pilgrimage for those who are physically and financially able.",
-    variation: "One mounth",
-    price:
-      "Varies depending on travel arrangements, accommodation, and services.",
-    exclusions:
-      "Price may not include visa fees, personal expenses, and sacrificial animal (if applicable).",
-    interests: ["Religion", "Pilgrimage", "Islam", "Cultural immersion"],
-    transportation:
-      "Varies depending on origin. Options include flights, buses, or joining organized Hajj groups with transportation included.",
-    guidance:
-      "Requires a valid Hajj visa.  |  Strict adherence to Hajj rituals.  |  Recommended to travel with a knowledgeable guide.",
-    path: "Varies depending on origin, but ultimately leads to Mecca, Saudi Arabia.",
-    requirements:
-      "Physical and financial ability.  |  For some nationalities, a Hajj quota system may apply.",
-  },
-  madian: {
-    title: "Journey to Madina",
-    description:
-      "Embark on a spiritual pilgrimage to Madina, the second holiest city in Islam. Explore the Prophet's Mosque (Masjid النبوي) and other historical sites, experience the vibrant Islamic culture, and deepen your faith.",
-    variation: "Individual travel or Guided tour (Umrah packages available)",
-    price:
-      "Varies depending on travel time, origin, accommodation, and inclusions. Expect a range of $2,000 - $10,000+.",
-    exclusions:
-      "Typically excludes international flights, meals beyond breakfast at some hotels, personal expenses, and Saudi Arabia visa fees.",
-    interests: ["Religion", "Pilgrimage", "History", "Culture", "Architecture"],
-    transportation:
-      "Varies depending on your origin. Options include flights (consider nearby airports like Jeddah or Medina), buses (potentially long journeys depending on origin), or car travel (requires proper permits for international travel by car).",
-    guidance:
-      "Consult a trusted travel agency specializing in Islamic pilgrimages. Visa and vaccination requirements may apply (check with Saudi Arabian authorities). Consider travel insurance and appropriate Islamic attire for religious sites. Learn basic Arabic phrases for a more enriching experience.",
-    path: "Varies depending on origin. Common routes involve flights to Jeddah or Medina airports, followed by ground transportation to Madina.",
-    requirements:
-      "Physical fitness for religious activities (walking, standing for prayers).  Appropriate clothing for Islamic sites (modest clothing that covers shoulders and knees for both men and women). Valid visa for Saudi Arabia (apply well in advance). Umrah pilgrimage may require additional permits depending on nationality.",
-  },
-}
 
 export interface LanguageSchema {
   imageUrl?: string
